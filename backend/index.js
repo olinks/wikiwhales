@@ -30,29 +30,24 @@ app.use(bodyparser.urlencoded({extended: true}));
 
 const apikey = "9C96I9JFR1EUYWY51DQ9PUXQWYKHMYJP8P";
 const contractaddress = "0x6Ec90334d89dBdc89E08A133271be3d104128Edb";
-var address = "0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff";
-var info;
+var addy = "0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff";
 
-axios.get(`https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${contractaddress}&address=${address}&tag=latest&apikey=${apikey}`)
-.then(res => {
-    info =res.data;
-    console.log(res.data.result);
-})
+
 
 app.get('/',(req, res) => {
-    res.send(info);
+    res.send(fetchAddress());
 });
 
-app.get('/api/insertHolders', (req, res) => {
+app.post('/api/insertHolders', (req, res) => {
     const sql ="INSERT INTO holders (address, balance) VALUES ('nksdk', '1000000000')";
     db.query(sql, (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
     });
 });
 
-app.get('/api/updateHolderBalance/:b', (req, res) => {
-    const address = req.body.addy;
-    const newbal = req.params.b;
+app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
+    const address = req.body.address;
+    const newbal = req.params.balance;
     const sql ="UPDATE holders SET balance=? WHERE address=?";
     db.query(sql,[newbal,address], (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
@@ -70,6 +65,54 @@ app.get('/getHolders',(req, res) => {
     })
 })
 
+app.get('/getAllHolders',(req, res) => {
+    const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 3";
+    db.query(sql,(err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+        data = result
+    })
+})
+
+// axios.get("http://localhost:3001/getAllHolders")
+// .then(res =>{
+//     const address = res.data;
+//     console.log(address);
+//     var i = 1;
+//     address.forEach( a => {
+
+//             const getBal = async () => {
+//                  const me = axios.get(`https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${contractaddress}&address=${a.address}&tag=latest&apikey=${apikey}`);
+//                 const response = await me.then(res => {
+//                     console.log(res.data.result);
+//                 });
+//             } 
+
+//         console.log(i);
+//         console.log(a.address);
+//         getBal();
+
+//          i++;
+//     })
+// }
+// )
+
+axios.get("http://localhost:3001/getAllHolders").then((res) => {
+  const dbResult = res.data;
+  console.log("dbresult =>",dbResult);
+  const mydb = dbResult.map( async (data) => {
+    const { address } = data;
+    const res = await axios.post(
+      `https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${contractaddress}&address=${address}&tag=latest&apikey=${apikey}`
+    );
+    const balance = res.data.result;
+    console.log(balance,address);
+    const intodb = {address, balance};
+    console.log("some text",intodb);
+    // return { address, balance };
+    return intodb;
+    })
+
+})
 // starting server and listening port
 app.listen(3001,()=>{
     console.log("server running, port 3001");
