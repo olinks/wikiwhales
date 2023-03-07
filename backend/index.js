@@ -45,6 +45,19 @@ app.post('/api/insertHolders', (req, res) => {
     });
 });
 
+app.get('/api/insertHolderInfo/:address&:username', (req, res) => {
+    const address = req.params.address;
+    const username = req.params.username;
+    // const phone = req.params.phone;
+    // const data = {address, username, phone};
+
+    res.send(username);
+    // const sql ="UPDATE holders SET username = ";
+    // db.query(sql, (err, result) => {
+    //     err ? res.send(err) : result ? res.send(result) : res.send('No result');
+    // });
+});
+
 app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
     const address = req.body.address;
     const newbal = req.params.balance;
@@ -65,12 +78,21 @@ app.get('/getHolders',(req, res) => {
     })
 })
 
-app.get('/getAllHolders',(req, res) => {
+app.get('/api/getAllHolders',(req, res) => {
     const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 3";
+    // const sql = "SELECT * FROM holders  WHERE balance > 0";
     db.query(sql,(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
         data = result
     })
+})
+
+app.get('/api/getWikicatData', (req, res) => {
+
+})
+
+app.get('/api/getDtgData', (req, res) => {
+
 })
 
 // axios.get("http://localhost:3001/getAllHolders")
@@ -96,20 +118,57 @@ app.get('/getAllHolders',(req, res) => {
 // }
 // )
 
-axios.get("http://localhost:3001/getAllHolders").then((res) => {
+// const sleep = (milliseconds) => {  
+//       return new Promise(resolve => setTimeout(resolve, milliseconds)); 
+// }
+
+axios.get("http://localhost:3001/api/getAllHolders").then((res) => {
   const dbResult = res.data;
-  console.log("dbresult =>",dbResult);
+
+  setInterval(() => {
+    var i = 1;
+    //   console.log(i,dbResult);
+
+      i++;
+  }, 20000);
+
+    dbResult.map(m => {
+        // console.log(m.address);
+    });
+
+//   console.log("dbresult =>",dbResult);
   const mydb = dbResult.map( async (data) => {
     const { address } = data;
-    const res = await axios.post(
-      `https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${contractaddress}&address=${address}&tag=latest&apikey=${apikey}`
-    );
-    const balance = res.data.result;
-    console.log(balance,address);
-    const intodb = {address, balance};
-    console.log("some text",intodb);
-    // return { address, balance };
-    return intodb;
+    // await sleep(1500);
+    setInterval(async () => {
+        const res = await 
+        axios.post(
+          `https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${contractaddress}&address=${address}&tag=latest&apikey=${apikey}`
+        ).then((res) => {
+            console.log("result", res);
+        }
+        );
+
+
+        /*
+        const balance = res.data.result;
+        const intodb = {address, balance};
+    
+        try{
+            // update Db
+            const query = "UPDATE holders SET balance=? WHERE address=?"
+            db.query(query,[intodb.balance, intodb.address],(err, result) => {
+                err ? console.log(err) : result ? console.log(intodb,result) : console.log("void");
+            })
+        }catch (e){
+            console.log("olayinka eeee eee eee eee eee eee eee eee eee eee eee eee eee ee error", e);
+        }
+        */
+
+
+        // console.log("some text",intodb);
+        // return intodb;
+    }, 20000);
     })
 
 })
@@ -117,3 +176,4 @@ axios.get("http://localhost:3001/getAllHolders").then((res) => {
 app.listen(3001,()=>{
     console.log("server running, port 3001");
 });
+// 7.934463926146836e3
