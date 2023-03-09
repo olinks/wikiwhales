@@ -115,6 +115,37 @@ app.get('/api/getDtgData', (req, res) => {
 
 });
 
+/* Example in Node.js */
+let response = null;
+new Promise(async (resolve, reject) => {
+  try {
+    response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=wiki-cat&vs_currencies=USD&include_24hr_vol=true&include_24hr_change=true');
+  } catch(ex) {
+    response = null;
+    // error
+    console.log(ex);
+    reject(ex);
+  }
+  if (response) {
+    // success
+    const json = response.data;
+    console.log(json);
+    resolve(json);
+  }
+});
+
+    // axios.get(
+    //     'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=WKC&CMC_PRO_API_KEY=846183f5-61b1-4b17-92a8-8fce70fd4420'
+    //     )
+
+    // axios.get(
+    //     'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=WKC&CMC_PRO_API_KEY=846183f5-61b1-4b17-92a8-8fce70fd4420'
+    //     )
+    //   .then((response) => {
+    //     // console.log((response.data['wiki-cat'].usd)*(10**18));
+    //     console.log(response.data.data);
+    //   });
+
 // starting server and listening port
 app.listen(3001,()=>{
     console.log("server running, port 3001");

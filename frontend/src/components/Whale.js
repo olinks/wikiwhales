@@ -45,9 +45,9 @@ function Whale() {
             </span>
             Defi Tiger
           </button>
-          <h5 className='font-inter underline text-[12px] text-[#F6F6F6]'>
+          {/* <h5 className='font-inter underline text-[12px] text-[#F6F6F6]'>
             And 8 other token...
-          </h5>
+          </h5> */}
         </div>
       </div>
       

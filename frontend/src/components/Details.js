@@ -4,8 +4,10 @@ import { Detailss } from "../data/data"
 
 function Details() {
   const [holderslist, setHoldersList] = useState([]);
+  // coinmarketcap API
+  // https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5000&convert=USD
   useEffect(() => {
-    axios.get('http://localhost:3001/api/getAllHolders')
+    axios.get('https://wikiwhales-server.vercel.app/api/getAllHolders')
     .then((res) => {
       setHoldersList(res.data);
     })
