@@ -58,7 +58,7 @@ function Overview() {
                 <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
                   API Token Supply
                 </h5>
-                <h4 className='font-space text-[#F6F6F6] text-[20px] font-bold'>
+                <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
                   {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </h4>
               </div>

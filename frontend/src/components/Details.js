@@ -19,6 +19,9 @@ function Details() {
           Rank
         </h5>
         <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+          Username
+        </h5>
+        <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
           Address
         </h5>
         <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
@@ -33,23 +36,28 @@ function Details() {
       </div>
 
       <ul>
-        {Detailss.map((items,i) => {
+        {/* {Detailss.map((items,i) => { */}
+        {holderslist.map((items,i) => {
+          const balance = (items.balance)/(10**18);
           return (
             <li key={i} className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]'>
               <h5 className='w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px] '>
                 {items.id}
               </h5>
               <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
+                {items.username}
+              </h5>
+              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
                 {items.address}
               </h5>
               <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
-                {items.quantity}
+                {balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </h5>
               <h5 className='w-[125px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                {items.percentage}
+                {((balance/(890454713676652.79)) * 100).toFixed(2)} %
               </h5>
               <h5 className='w-[109px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                {items.value}
+                ${(balance*(0.00000002)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </h5>
             </li>
           )
