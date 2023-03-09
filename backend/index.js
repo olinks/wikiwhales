@@ -36,7 +36,7 @@ var addy = "0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff";
 
 
 app.get('/',(req, res) => {
-
+    res.send("connected");
 });
 
 app.post('/api/insertHolders', (req, res) => {
