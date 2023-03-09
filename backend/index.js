@@ -17,7 +17,7 @@ const app = express();
 const mysql = require('mysql');
 
 // connecting to Database
-const db = require('./db');
+const db = require('./db/db');
 
 // import promisify and sleep function
 const { promisify } = require('util');
