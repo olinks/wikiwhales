@@ -69,7 +69,7 @@ app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
     });
 });
 
-app.get('/getHolders',(req, res) => {
+app.get('/api/getHolders',(req, res) => {
     const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 1000";
     db.query(sql,(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');

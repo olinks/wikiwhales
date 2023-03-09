@@ -6,7 +6,8 @@ function Overview() {
   const [tokenSupply, setTokenSupply] = useState("");
   useEffect(() =>{
 
-    axios.get('http://localhost:3001/api/getTokenSupply')
+    // axios.get('http://localhost:3001/api/getTokenSupply')
+    axios.get('https://wikiwhales-server.vercel.app/api/getTokenSupply')
     .then((res) => {
       setTokenSupply(res.data);
     });
@@ -61,9 +62,9 @@ function Overview() {
                   {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </h4>
               </div>
-          {Whales.map((items) => {
+          {Whales.map((items, i) => {
             return (
-              <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
+              <div key={i} className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
                 <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
                   {items.title}
                 </h5>
