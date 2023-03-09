@@ -1,7 +1,18 @@
-import React from "react"
+import React,{useEffect, useState} from "react"
 import wiki1 from "../assets/Wiki1.png"
 import { Whales } from "../data/data"
+import axios from 'axios'
 function Overview() {
+  const [tokenSupply, setTokenSupply] = useState("");
+  useEffect(() =>{
+
+    axios.get('http://localhost:3001/api/getTokenSupply')
+    .then((res) => {
+      setTokenSupply(res.data);
+    });
+
+  },[tokenSupply]);
+  
   return (
     <div className='sm:px-32 px-4  mb-14'>
       <div>
@@ -42,6 +53,14 @@ function Overview() {
           </div>
         </div>
         <div className='flex flex-col sm:flex-row flex-wrap w-[100%] mt-3 sm:mt-0  sm:w-[800px] lg:w-[550px] sm:px-4 px-0  gap-4'>
+                <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
+                <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
+                  API Token Supply
+                </h5>
+                <h4 className='font-space text-[#F6F6F6] text-[20px] font-bold'>
+                  {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </h4>
+              </div>
           {Whales.map((items) => {
             return (
               <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>

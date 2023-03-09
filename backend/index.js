@@ -17,12 +17,7 @@ const app = express();
 const mysql = require('mysql');
 
 // connecting to Database
-const db = mysql.createPool({
-    host:"localhost",
-    user:"root",
-    password:"password",
-    database:"wikicat"
-});
+const db = require('./db');
 
 // import promisify and sleep function
 const { promisify } = require('util');
@@ -65,6 +60,9 @@ app.get('/api/insertHolderInfo/', (req, res) => {
 app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
     const address = req.params.address;
     const newbal = req.params.balance;
+    const bal = async () => {
+        axios.get()
+    }
     const sql ="UPDATE holders SET balance=? WHERE address=?";
     db.query(sql,[newbal,address], (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
@@ -96,9 +94,10 @@ app.get('/api/getWikicatData', (req, res) => {
 });
 
 // wikicat total supply
-app.get('/api/getTokenSupply',(req,res) => {
-    axios.get(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${contractaddress}&apikey=${apikey}`)
+app.get('/api/getTokenSupply', async (req,res) => {
+    await axios.get(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${contractaddress}&apikey=${apikey}`)
     .then((result) => {
+        console.log("requested");
         res.send(result.data.result);
     });
 });
@@ -120,4 +119,3 @@ app.get('/api/getDtgData', (req, res) => {
 app.listen(3001,()=>{
     console.log("server running, port 3001");
 });
-// 7.934463926146836e3
