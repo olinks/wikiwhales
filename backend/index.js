@@ -72,8 +72,7 @@ app.get('/api/getHolders',(req, res) => {
     db.query(sql,(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
         result.map(val =>{
-            console.log(val.address);
-            console.log(val.balance);
+
         });
     })
 })
