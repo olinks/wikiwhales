@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import axios from 'axios'
 import { Detailss } from "../data/data"
+import { Link } from "react-router-dom"
 
 function Details() {
   const [holderslist, setHoldersList] = useState([]);
@@ -13,10 +14,10 @@ function Details() {
     })
   },[])
   return (
-    <div className='px-4 sm:px-32'>
+    <div className='md:px-32 px-4 '>
       <div className='flex  gap-[40px] bg-[#101116] py-1  pl-[10px]'>
         <h5 className='w-[33px] text-white sm:text-[12px] lg:text-[14px] text-[8px]'>
-          {" "}
+     
           Rank
         </h5>
         <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
@@ -37,28 +38,23 @@ function Details() {
       </div>
 
       <ul>
-        {/* {Detailss.map((items,i) => { */}
-        {holderslist.map((items,i) => {
-          const balance = (items.balance)/(10**18);
+        {Detailss.map((detail) => {
           return (
-            <li key={i} className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]'>
+            <li className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]' key={detail.id}>
               <h5 className='w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px] '>
-                {items.id}
+             {detail.id}
               </h5>
               <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
-                {items.username}
-              </h5>
-              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
-                {items.address}
+                <Link to={`details/${detail.id}`}>{detail.address}</Link>
               </h5>
               <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
-                {balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {detail.quantity}
               </h5>
               <h5 className='w-[125px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                {((balance/(890454713676652.79)) * 100).toFixed(2)} %
+                {detail.percentage}
               </h5>
               <h5 className='w-[109px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                ${(balance*(0.00000002)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {detail.value}
               </h5>
             </li>
           )

@@ -6,7 +6,6 @@ function Overview() {
   const [tokenSupply, setTokenSupply] = useState("");
   useEffect(() =>{
 
-    // axios.get('http://localhost:3001/api/getTokenSupply')
     axios.get('https://wikiwhales-server.vercel.app/api/getTokenSupply')
     .then((res) => {
       setTokenSupply(res.data);
@@ -15,7 +14,7 @@ function Overview() {
   },[tokenSupply]);
   
   return (
-    <div className='sm:px-32 px-4  mb-14'>
+    <div className='md:px-32 px-4   mb-14'>
       <div>
         <h5 className='font-inter text-[#F6F6F6] text-[12px] my-2'>
           Token Overview for WIki Cat
