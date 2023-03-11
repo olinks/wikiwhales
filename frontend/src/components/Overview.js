@@ -3,7 +3,7 @@ import wiki1 from "../assets/Wiki1.png"
 import { Whales } from "../data/data"
 function Overview() {
   return (
-    <div className='sm:px-32 px-4  mb-14'>
+    <div className='md:px-32 px-4   mb-14'>
       <div>
         <h5 className='font-inter text-[#F6F6F6] text-[12px] my-2'>
           Token Overview for WIki Cat

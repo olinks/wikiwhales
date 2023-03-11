@@ -1,15 +1,13 @@
 import React from "react"
-import { useNavigate,Link } from "react-router-dom"
 import { Detailss } from "../data/data"
+import { Link } from "react-router-dom"
 
 function Details() {
-  
   return (
-   
-    <div className='px-4 sm:px-32'>
-      
+    <div className='md:px-32 px-4 '>
       <div className='flex  gap-[40px] bg-[#101116] py-1  pl-[10px]'>
         <h5 className='w-[33px] text-white sm:text-[12px] lg:text-[14px] text-[8px]'>
+     
           Rank
         </h5>
         <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
@@ -27,23 +25,23 @@ function Details() {
       </div>
 
       <ul>
-        {Detailss.map((items) => {
+        {Detailss.map((detail) => {
           return (
-            <li className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]'>
+            <li className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]' key={detail.id}>
               <h5 className='w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px] '>
-                {items._id}
+             {detail.id}
               </h5>
               <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
-              <Link>  {items.address}</Link>
+                <Link to={`details/${detail.id}`}>{detail.address}</Link>
               </h5>
               <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
-                {items.quantity}
+                {detail.quantity}
               </h5>
               <h5 className='w-[125px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                {items.percentage}
+                {detail.percentage}
               </h5>
               <h5 className='w-[109px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                {items.value}
+                {detail.value}
               </h5>
             </li>
           )
