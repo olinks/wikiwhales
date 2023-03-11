@@ -67,14 +67,17 @@ app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
     });
 });
 
+app.get('/api/getWhales',(req, res) => {
+    const sql = "SELECT * FROM holders WHERE balance > 1000000000000 ORDER BY balance DESC LIMIT 1000";
+    db.query(sql,(err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+    })
+})
+
 app.get('/api/getHolders',(req, res) => {
     const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 1000";
     db.query(sql,(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
-        result.map(val =>{
-            console.log(val.address);
-            console.log(val.balance);
-        });
     })
 })
 
