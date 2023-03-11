@@ -14,7 +14,6 @@ function Details() {
   },[])
   return (
     <div className='px-4 sm:px-32'>
-      <h2 className="text-white font-space font-bold text-[20px] lg:text-[32px] text-dimWhite mt-2">Whales</h2>
       <div className='flex  gap-[40px] bg-[#101116] py-1  pl-[10px]'>
         <h5 className='w-[33px] text-white sm:text-[12px] lg:text-[14px] text-[8px]'>
           {" "}

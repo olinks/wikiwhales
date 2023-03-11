@@ -1,7 +1,6 @@
-import React,{useEffect, useState} from "react"
+import React from "react"
 import wiki1 from "../assets/Wiki1.png"
 import { Whales } from "../data/data"
-import axios from 'axios'
 function Overview() {
   const [tokenSupply, setTokenSupply] = useState("");
   useEffect(() =>{
