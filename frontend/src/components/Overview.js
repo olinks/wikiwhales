@@ -1,4 +1,5 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+import axios from 'axios'
 import wiki1 from "../assets/Wiki1.png"
 import { Whales } from "../data/data"
 function Overview() {
