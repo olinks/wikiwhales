@@ -6,7 +6,6 @@ function Overview() {
   const [tokenSupply, setTokenSupply] = useState("");
   useEffect(() =>{
 
-    // axios.get('http://localhost:3001/api/getTokenSupply')
     axios.get('https://wikiwhales-server.vercel.app/api/getTokenSupply')
     .then((res) => {
       setTokenSupply(res.data);
