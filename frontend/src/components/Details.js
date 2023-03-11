@@ -1,14 +1,27 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
+import axios from 'axios'
 import { Detailss } from "../data/data"
 import { Link } from "react-router-dom"
 
 function Details() {
+  const [holderslist, setHoldersList] = useState([]);
+  // coinmarketcap API
+  // https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5000&convert=USD
+  useEffect(() => {
+    axios.get('https://wikiwhales-server.vercel.app/api/getAllHolders')
+    .then((res) => {
+      setHoldersList(res.data);
+    })
+  },[])
   return (
     <div className='md:px-32 px-4 '>
       <div className='flex  gap-[40px] bg-[#101116] py-1  pl-[10px]'>
         <h5 className='w-[33px] text-white sm:text-[12px] lg:text-[14px] text-[8px]'>
      
           Rank
+        </h5>
+        <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+          Username
         </h5>
         <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
           Address

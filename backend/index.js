@@ -17,12 +17,8 @@ const app = express();
 const mysql = require('mysql');
 
 // connecting to Database
-const db = mysql.createPool({
-    host:"localhost",
-    user:"root",
-    password:"password",
-    database:"wikicat"
-});
+
+const db = require('./db/db');
 
 // import promisify and sleep function
 const { promisify } = require('util');
@@ -41,7 +37,7 @@ var addy = "0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff";
 
 
 app.get('/',(req, res) => {
-
+    // res.send("connected");
 });
 
 app.post('/api/insertHolders', (req, res) => {
@@ -71,7 +67,7 @@ app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
     });
 });
 
-app.get('/getHolders',(req, res) => {
+app.get('/api/getHolders',(req, res) => {
     const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 1000";
     db.query(sql,(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
@@ -92,7 +88,23 @@ app.get('/api/getAllHolders',(req, res) => {
 })
 
 app.get('/api/getWikicatData', (req, res) => {
-
+let response = null;
+new Promise(async (resolve, reject) => {
+  try {
+    response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=wiki-cat&vs_currencies=USD&include_24hr_vol=true&include_24hr_change=true');
+  } catch(ex) {
+    response = null;
+    // error
+    console.log(ex);
+    reject(ex);
+  }
+  if (response) {
+    // success
+    const json = response.data;
+    console.log(json);
+    resolve(json);
+  }
+});
 });
 
 // wikicat total supply
@@ -120,4 +132,3 @@ app.get('/api/getDtgData', (req, res) => {
 app.listen(3001,()=>{
     console.log("server running, port 3001");
 });
-// 7.934463926146836e3
