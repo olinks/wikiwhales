@@ -4,8 +4,16 @@ import { RiSearchLine } from "react-icons/ri"
 import { AiOutlineUser, AiOutlineCopy, AiOutlinePhone } from "react-icons/ai"
 import { BsCurrencyDollar } from "react-icons/bs"
 import { IconContext } from "react-icons/lib"
+import axios from "axios"
 
 function AddWhales() {
+  function fetchbalance (e){
+    const addy = e.target.value;
+    axios.get()
+    .then((result) => {
+
+    });
+  }
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "20px" }}>
@@ -19,6 +27,7 @@ function AddWhales() {
               <input
                 type='text'
                 className='bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                name="username"
                 placeholder='Username'
               />
             </div>
@@ -27,6 +36,7 @@ function AddWhales() {
               <input
                 type='text'
                 className='bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                name="balance"
                 placeholder='Balance'
               />
             </div>
@@ -35,6 +45,7 @@ function AddWhales() {
               <input
                 type='text'
                 className='bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                name="address"
                 placeholder='Address'
               />
             </div>
@@ -43,6 +54,7 @@ function AddWhales() {
               <input
                 type='text'
                 className='bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                name="phone"
                 placeholder='Phone Number'
               />
             </div>

@@ -8,7 +8,7 @@ function Details() {
   // coinmarketcap API
   // https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5000&convert=USD
   useEffect(() => {
-    axios.get('https://wikiwhales-server.vercel.app/api/getAllHolders')
+    axios.get('https://wikiwhales-server.vercel.app/api/getWhales')
     .then((res) => {
       setHoldersList(res.data);
     })
@@ -43,6 +43,9 @@ function Details() {
             <li className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]' key={detail.id}>
               <h5 className='w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px] '>
              {detail.id}
+              </h5>
+              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
+                <Link to={`details/${detail.id}`}>{detail.username}</Link>
               </h5>
               <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
                 <Link to={`details/${detail.id}`}>{detail.address}</Link>

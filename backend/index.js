@@ -29,10 +29,10 @@ const sleep = promisify(setTimeout);
 app.use(cors());
 app.use(express.json());
 app.use(bodyparser.urlencoded({extended: true}));
-
-const apikey = "9C96I9JFR1EUYWY51DQ9PUXQWYKHMYJP8P";
-const contractaddress = "0x6Ec90334d89dBdc89E08A133271be3d104128Edb";
-var addy = "0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff";
+const options ={
+    apikey:"9C96I9JFR1EUYWY51DQ9PUXQWYKHMYJP8P",
+    contractaddress:"0x6Ec90334d89dBdc89E08A133271be3d104128Edb"
+}
 
 
 
@@ -74,11 +74,21 @@ app.get('/api/getWhales',(req, res) => {
     })
 })
 
-app.get('/api/getHolders',(req, res) => {
-    const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 1000";
-    db.query(sql,(err, result) => {
+app.get('/api/getHolder',(req, res) => {
+    const addy = req.body.address;
+    const sql = "SELECT * FROM holders WHERE address=?";
+    db.query(sql,[addy],(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
     })
+})
+
+app.get('/api/getHolderBalance/:address',(req,res) => {
+    const addy = req.params.address;
+    // const addy = "0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff";
+    axios.get(`https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${options.contractaddress}&address=${addy}&tag=latest&apikey=${options.apikey}`)
+   .then((result) => {
+    res.send(result.data.result);
+   })
 })
 
 app.get('/api/getAllHolders',(req, res) => {
@@ -112,7 +122,7 @@ new Promise(async (resolve, reject) => {
 
 // wikicat total supply
 app.get('/api/getTokenSupply',(req,res) => {
-    axios.get(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${contractaddress}&apikey=${apikey}`)
+    axios.get(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${options.contractaddress}&apikey=${options.apikey}`)
     .then((result) => {
         res.send(result.data.result);
     });
@@ -120,7 +130,7 @@ app.get('/api/getTokenSupply',(req,res) => {
 
 app.get('/api/getTokenCirculatingSupply', (req,res) => {
     var circulatingSupply
-    axios.get(`https://api.bscscan.com/api?module=stats&action=tokenCsupply&contractaddress=${contractaddress}}&apikey=${apikey}`)
+    axios.get(`https://api.bscscan.com/api?module=stats&action=tokenCsupply&contractaddress=${options.contractaddress}}&apikey=${options.apikey}`)
     .then((result) => {
         res.send(result.data.result);
         console.log(result.data);
