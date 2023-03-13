@@ -113,8 +113,9 @@ new Promise(async (resolve, reject) => {
   }
   if (response) {
     // success
-    const json = response.data;
-    console.log(json);
+    const json = response.data['wiki-cat'];
+    console.log(json.usd);
+    res.send(json);
     resolve(json);
   }
 });

@@ -4,6 +4,7 @@ import Header from "../components/Header"
 import Overview from "../components/Overview"
 import Pagination from "../components/Pagination"
 import Whale from "../components/Whale"
+import Datatable from "../components/Data_tables"
 
 
 function Home() {
@@ -13,9 +14,10 @@ function Home() {
         <Header />
         <Whale />
         <Overview />
-        <Details />
+        {/* <Details /> */}
+        <Datatable />
 
-        <Pagination />
+        {/* <Pagination /> */}
      
     </div>
   )

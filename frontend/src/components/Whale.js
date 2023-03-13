@@ -18,8 +18,7 @@ function Whale() {
         </h2>
         <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center'>
           <p className='font-light text-[14px] text-[#838699] w-[100%] sm:w-[350px]'>
-            A little description here. A town hall different. from balablu bluu
-            blue, bulaba. What will they eat. Corn, cassava, Agbado.{" "}
+            A list of all Worthy Wikicat Holders{" "}
           </p>
           <div className='flex w-[100%] sm:w-[387px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
             <RiSearchLine className='' />
@@ -43,14 +42,14 @@ function Whale() {
             </span>
             Wiki Cat
           </button>
-          <button className='font-inter w-[107px] h-[44px] border border-[#3C3E4D]  text-[12px] sm:text-[14px]font-bold rounded-[10px] text-[#3C3E4D] flex gap-1 justify-center items-center'>
+          {/* <button className='font-inter w-[107px] h-[44px] border border-[#3C3E4D]  text-[12px] sm:text-[14px]font-bold rounded-[10px] text-[#3C3E4D] flex gap-1 justify-center items-center'>
             <span>
               <img src={defi} alt='' />
             </span>
             Defi Tiger
-          </button>
-          <button onClick={handleClick} className='ont-inter w-[107px] h-[44px] bg-white  text-[12px]  sm:text-[14px] font-bold rounded-[10px] text-[#13141A] flex justify-center items-center'>
-        Add Whale
+          </button> */}
+          <button onClick={handleClick} className='ont-inter w-[107px] h-[44px] bg-[#21D4AF]  text-[12px]  sm:text-[14px] font-bold rounded-[10px] text-[#13141A] flex justify-center items-center'>
+        + Add Whale
       </button>
         </div>
       </div>

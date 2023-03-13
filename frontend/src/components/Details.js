@@ -44,10 +44,10 @@ function Details() {
               <h5 className='w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px] '>
              {detail.id}
               </h5>
-              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
+              <h5 className='w-[33px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
                 <Link to={`details/${detail.id}`}>{detail.username}</Link>
               </h5>
-              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
+              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] '>
                 <Link to={`details/${detail.id}`}>{detail.address}</Link>
               </h5>
               <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>

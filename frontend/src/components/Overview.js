@@ -4,6 +4,7 @@ import wiki1 from "../assets/Wiki1.png"
 import { Whales } from "../data/data"
 function Overview() {
   const [tokenSupply, setTokenSupply] = useState("");
+  const [tokenPrice, setTokenPrice] = useState("");
   useEffect(() =>{
 
     axios.get('https://wikiwhales-server.vercel.app/api/getTokenSupply')
