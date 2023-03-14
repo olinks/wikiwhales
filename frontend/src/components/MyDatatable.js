@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import convertToCurrency from "./convertToCurrency";
 
-function Data_tables (){
+function MyDatatable (){
     const [holderslist, setHoldersList] = useState([]);
 
     useEffect(() => {
@@ -126,4 +126,4 @@ function Data_tables (){
         </div>
     );
 }
-export default Data_tables;
+export default MyDatatable;
