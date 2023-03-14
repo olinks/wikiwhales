@@ -4,49 +4,108 @@ import { Link } from "react-router-dom"
 
 function Details() {
   return (
-    <div className='md:px-32 px-4 '>
-      <div className='flex  gap-[40px] bg-[#101116] py-1  pl-[10px]'>
-        <h5 className='w-[33px] text-white sm:text-[12px] lg:text-[14px] text-[8px]'>
-     
-          Rank
-        </h5>
-        <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-          Address
-        </h5>
-        <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
-          Quantity
-        </h5>
-        <h5 className='w-[125px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-          Percentage
-        </h5>
-        <h5 className='w-[109px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-          Value
-        </h5>
-      </div>
-
-      <ul>
+    <div className='md:px-32 px-7 overflow-x-scroll sm:overflow-hidden'>
+      <table style={{}}>
+        <tr className='bg-[#101116] '>
+          <td
+            style={{
+              width: "53px",
+              paddingTop: "3px",
+              paddingBottom: "3px",
+              paddingLeft: "6px",
+            }}
+            className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white'
+          >
+            Rank
+          </td>
+          <td
+            style={{ width: "307px" }}
+            className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white lg:pl-[40px] md:pl-[27px]'
+          >
+            {" "}
+            Address
+          </td>
+          <td
+            style={{ width: "254px" }}
+            className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white lg:pl-[40px]'
+          >
+            {" "}
+            Quantity
+          </td>
+          <td
+            style={{ width: "145px" }}
+            className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white lg:pl-[40px]'
+          >
+            {" "}
+            Percentage
+          </td>
+          <td
+            style={{ width: "129px" }}
+            className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white lg:pl-[40px]  md:pl-[40px] md:pr-[60px]'
+          >
+            Value
+          </td>
+        </tr>
         {Detailss.map((detail) => {
           return (
-            <li className='flex gap-[10px] sm:gap-[40px] border-b-[1px] border-[#3C3E4D] py-4 pl-[10px]' key={detail.id}>
-              <h5 className='w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px] '>
-             {detail.id}
-              </h5>
-              <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme'>
+            <tr key={detail.id} style={{ borderBottom: "1px solid #3C3E4D" }}>
+              <td
+                style={{
+                  width: "33px",
+                  paddingTop: "12px",
+                  paddingBottom: "12px",
+                }}
+                className='sm:text-[12px] lg:pr-[40px] md:pl-[10px] lg:pl-[20px] lg:text-[14px] text-[10px] font-inter font-normal text-white'
+              >
+                {detail.id}
+              </td>
+              <td
+                style={{
+                  width: "287px",
+                  paddingTop: "12px",
+                  paddingBottom: "12px",
+                }}
+                className='sm:text-[12px] pr-7 md:pr-[-28px] md:pl-[27px] lg:text-[14px] lg:pr-[40px] lg:pl-[40px] text-[10px] font-inter font-normal text-[#21D4AF]'
+              >
                 <Link to={`details/${detail.id}`}>{detail.address}</Link>
-              </h5>
-              <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
+              </td>
+              <td
+                style={{
+                  width: "234px",
+                  paddingTop: "12px",
+                  paddingBottom: "12px",
+                }}
+                className='sm:text-[12px] pr-7 md:pr-[-28px] lg:text-[14px] lg:pr-[40px]  lg:pl-[40px] text-[10px] font-inter font-normal text-white'
+              >
+                {" "}
                 {detail.quantity}
-              </h5>
-              <h5 className='w-[125px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+              </td>
+              <td
+                style={{
+                  width: "125px",
+                  paddingTop: "12px",
+                  paddingBottom: "12px",
+                }}
+                className='sm:text-[12px] pr-7 md:pr-[-28px] lg:text-[14px] lg:pr-[40px] text-[10px] lg:pl-[40px] font-inter font-normal text-white'
+              >
+                {" "}
                 {detail.percentage}
-              </h5>
-              <h5 className='w-[109px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+              </td>
+              <td
+                style={{
+                  width: "109px",
+                  paddingTop: "12px",
+                  paddingBottom: "12px",
+                }}
+                className='sm:text-[12px] pr-7  lg:text-[14px] lg:pr-[120px] md:pl-[40px] md:pr-[60px] lg:pl-[80px] text-[10px] font-inter font-normal text-white'
+              >
+                {" "}
                 {detail.value}
-              </h5>
-            </li>
+              </td>
+            </tr>
           )
         })}
-      </ul>
+      </table>
     </div>
   )
 }

@@ -9,11 +9,11 @@ function AddWhales() {
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "20px" }}>
-        <div className='px-4 flex justify-center items-center flex-col h-[100vh]'>
+        <div className='px-4 flex justify-center items-center flex-col w-[100%] h-[100vh]'>
           <h2 className='font-bold text-white text-[30px] font-lexend'>
             ADD TO WHALES
           </h2>
-          <div className="flex flex-col gap-3">
+          <div className='flex flex-col gap-3'>
             <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
               <AiOutlineUser className='' />
               <input
@@ -46,6 +46,14 @@ function AddWhales() {
                 placeholder='Phone Number'
               />
             </div>
+          </div>
+          <div className='flex w-[350px] justify-between mt-5'>
+            <button className='font-inter w-[107px] h-[44px] bg-white  text-[12px] sm:text-[14px] font-bold rounded-[10px] text-[#13141A] flex gap-1 justify-center items-center'>
+              Cancel
+            </button>
+            <button className='font-inter w-[107px] h-[44px] border border-[#3C3E4D]  text-[12px] sm:text-[14px]font-bold rounded-[10px] text-[#3C3E4D] flex gap-1 justify-center items-center'>
+              Submit
+            </button>
           </div>
         </div>
       </IconContext.Provider>
