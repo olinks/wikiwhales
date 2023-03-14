@@ -38,7 +38,7 @@ function EditWhale() {
   return (
     <div>
       <Header />
-      <div className='px-7 md:px-32 mt-5 '>
+      <div className='px-5 md:px-32 mt-5 '>
         <IconContext.Provider value={{ color: "white", size: "30px" }}>
           <BsArrowLeft onClick={handleClick} />
         </IconContext.Provider>
@@ -70,7 +70,7 @@ function EditWhale() {
             </div>
             <button
               onClick={handleOpen}
-              className='font-inter text-[14px] sm:text-[20px] mt-2 font-bold text-white w-[77px] sm:w-[129px] sm:h-[49px] h-[33px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'
+              className='font-inter text-[14px] sm:text-[20px] mt-2  font-bold text-white w-[77px] sm:w-[129px] sm:h-[49px] h-[43px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'
             >
               Edit
             </button>
@@ -97,13 +97,13 @@ function EditWhale() {
                 variant='h6'
                 component='h2'
               >
-                <div className=' w-[100%] sm:w-[708px]  h-[300px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-7 mt-5'>
+                <div className=' w-[100%]   h-[300px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-7 mt-5'>
                   <div className=' '>
                     <div>
                       <h5 className='text-[#838699] text-[14px]  font-normal '>
                         Address
                       </h5>
-                      <h4 className='font-space font-bold text-[16px] text-dimWhite mt-2 border-b border-[#41434F] pb-1 overme'>
+                      <h4 className='font-space font-bold text-[16px] text-dimWhite mt-2 border-b border-[#41434F] pb-1  overmee'>
                         {details.address}
                       </h4>
                     </div>
@@ -111,7 +111,7 @@ function EditWhale() {
                       <h5 className='text-[#838699] text-[14px]  font-normal mb-2 '>
                         Username
                       </h5>
-                      <div className='flex w-[100%] sm:w-[387px] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px] border-[#838699]'>
+                      <div className='flex w-[100%]] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px] border-[#838699]'>
                         <input
                           type='text'
                           className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
@@ -124,7 +124,7 @@ function EditWhale() {
                       <h5 className='text-[#838699] text-[14px]  font-normal mb-2 '>
                         Phone Number
                       </h5>
-                      <div className='flex w-[100%] sm:w-[387px] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px]  border-[#838699]'>
+                      <div className='flex w-[100%]  justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px]  border-[#838699]'>
                         <input
                           type='text'
                           className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
@@ -133,7 +133,7 @@ function EditWhale() {
                       </div>
                     </div>
 
-                    <button className='font-inter text-[14px] mt-2 font-bold text-white w-[77px] h-[33px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
+                    <button className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
                       Save
                     </button>
                   </div>
@@ -156,7 +156,7 @@ function EditWhale() {
         </div>
       </div>
 
-      <div className='mt-10 pl-7 md:px-32  overflow-x-scroll sm:overflow-hidden'>
+      <div className='mt-10 pl-5 md:px-32  overflow-x-scroll sm:overflow-hidden'>
         <table style={{}}>
           <tr className='bg-[#101116] '>
             <td

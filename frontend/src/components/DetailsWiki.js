@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 function Details() {
   return (
-    <div className='md:px-32 px-7 overflow-x-scroll sm:overflow-hidden'>
+    <div className='md:px-32 px-5 overflow-x-scroll sm:overflow-hidden'>
       <table style={{}}>
         <tr className='bg-[#101116] '>
           <td

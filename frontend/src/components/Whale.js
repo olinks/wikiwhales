@@ -10,7 +10,7 @@ function Whale() {
     navigate("/add-whales")
   }
   return (
-    <div className='md:px-32 px-7 mt-10 '>
+    <div className='md:px-32 px-5 mt-10 '>
       <IconContext.Provider value={{ size: "20px", color: "#3C3E4D" }}>
         <div className='mb-10 '>
           <h2 className='font-space font-normal text-[40px] text-white  text-center sm:text-start'>
