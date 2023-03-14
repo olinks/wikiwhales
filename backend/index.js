@@ -41,7 +41,7 @@ app.get('/',(req, res) => {
 });
 
 app.post('/api/insertHolders', (req, res) => {
-    const sql ="INSERT INTO holders (address, balance) VALUES ('nksdk', '1000000000')";
+    const sql ="INSERT INTO holders (address, balance) VALUES ('testaddress', 'test balance')";
     db.query(sql, (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
     });

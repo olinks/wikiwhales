@@ -23,7 +23,8 @@ const [phone,setPhone] = useState("");
   function submitWhale(e){
     e.preventDefault();
     alert("Submitted");
-    axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    // axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
     .then((res) =>{
       console.log(res);
       alert('Saved');
