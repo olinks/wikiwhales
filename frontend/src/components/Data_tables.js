@@ -6,22 +6,19 @@ import { Link } from "react-router-dom"
 function Data_tables (){
     const [holderslist, setHoldersList] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:3001/api/getWhales')
+        axios.get('https://wikiwhales-server.vercel.app/api/getWhales')
         .then((res) => {
         setHoldersList(res.data);
+        // console.log(res.data);
         })
     },[])
-
-    // const linkto = ({row}) => {
-    //     <Link to={`details/${row.id}`}>{row.username}</Link>
-    // }
-
+    // Columns to initialize react-data-table-component
     const columns = [
         {
             name: "Rank",
-            selector: row => row.rank,
+            selector: row => row.id,
             sortable: true,
-            cell: row => (<h5 className="w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px]">{row.rank}</h5>),
+            cell: row => (<h5 className="w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px]">{row.id}</h5>),
         },
         {
             name: "Username",
@@ -49,7 +46,7 @@ function Data_tables (){
             sortable: true,
             cell: row => (
                 <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
-                {row.balance}
+                {(row.balance / 10**18).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </h5>
             ),
 
@@ -75,177 +72,178 @@ function Data_tables (){
             ),
         }
     ];
-    const data = [
-        {
-            id:1,
-            rank: "1",
-            username: "olinks1",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "100000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-        ,
-        {
-            id:2,
-            rank: "2",
-            username: "olinks",
-            address: "0xb552cf92e761c8c71f8de52ed10b0df6",
-            balance: "9000000000",
-            percentage: "33.6812%",
-            value: "$5,310,002.80"
-        }
-    ];
+    // const data = [
+    //     {
+    //         id:1,
+    //         rank: "1",
+    //         username: "olinks1",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "100000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    //     ,
+    //     {
+    //         id:2,
+    //         rank: "2",
+    //         username: "olinks",
+    //         address: "0xb552cf92e761c8c71f8de52ed10b0df6",
+    //         balance: "9000000000",
+    //         percentage: "33.6812%",
+    //         value: "$5,310,002.80"
+    //     }
+    // ];
+    const data = holderslist;
     createTheme('solarized', {
   text: {
     primary: 'white',
@@ -268,18 +266,11 @@ function Data_tables (){
   },
 }, 'dark');
 
-const customstyles = {
-    rows:{
-        style :{
-            fontSize: '44px',
-        }
-    }
-}
     return(
         <div>
             <div className="sm:px-5 lg:px-20">
                 <DataTable
-                title="Olinks"
+                title="Whales"
                     columns={columns}
                     data={data}
                     fixedHeader

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react"
 import axios from 'axios'
 import wiki1 from "../assets/Wiki1.png"
-import { Whales } from "../data/data"
+// import { Whales } from "../data/data"
 function Overview() {
-  const [tokenSupply, setTokenSupply] = useState("");
+  const [tokenSupply, setTokenSupply] = useState('');
   const [tokenPrice, setTokenPrice] = useState("");
   useEffect(() =>{
 
@@ -13,6 +13,32 @@ function Overview() {
     });
 
   },[tokenSupply]);
+
+  useEffect(() => {
+    axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
+    .then((res) => {
+      console.log(res.data.usd);
+      // console.log((res.data.usd)*(10**18));
+      // setTokenPrice((res.data.usd)/(10**8));
+      // setTokenPrice((res.data.usd)*(10**2));
+      setTokenPrice((res.data.usd));
+    })
+  },[])
+
+  function convertToDecimal(n){
+    // sanity check - is it exponential number
+  const str = n.toString();
+  if (str.indexOf('e') !== -1) {
+    const exponent = parseInt(str.split('-')[1], 10);
+    // Unfortunately I can not return 1e-8 as 0.00000001, because even if I call parseFloat() on it,
+    // it will still return the exponential representation
+    // So I have to use .toFixed()
+    const result = n.toFixed(exponent);
+    return result;
+  } else {
+    return n;
+  }
+  }
   
   return (
     <div className='md:px-32 px-4   mb-14'>
@@ -30,7 +56,8 @@ function Overview() {
                 Current token Price
               </h5>
               <h4 className='font-space font-bold text-[20px] lg:text-[32px] text-dimWhite mt-2'>
-                $0.00000088
+                {/* $0.00000088 */}
+                {convertToDecimal(tokenPrice)}
               </h4>
             </div>
           </div>
@@ -56,24 +83,30 @@ function Overview() {
         <div className='flex flex-col sm:flex-row flex-wrap w-[100%] mt-3 sm:mt-0  sm:w-[800px] lg:w-[550px] sm:px-4 px-0  gap-4'>
                 <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
                 <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
-                  API Token Supply
+                  Token Supply
                 </h5>
                 <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
                   {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </h4>
               </div>
-          {Whales.map((items, i) => {
-            return (
-              <div key={i} className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
+
+                <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
                 <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
-                  {items.title}
+                  Circulating Supply
                 </h5>
-                <h4 className='font-space text-[#F6F6F6] text-[20px] font-bold'>
-                  {items.amount}
+                <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
+                  Coming Soon
                 </h4>
               </div>
-            )
-          })}
+
+                <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
+                <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
+                  Number Holders
+                </h5>
+                <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
+                  Coming Soon
+                </h4>
+              </div>
         </div>
       </div>
     </div>

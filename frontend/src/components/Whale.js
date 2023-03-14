@@ -1,7 +1,7 @@
 import React from "react"
 import { IconContext } from "react-icons/lib"
 import { RiSearchLine } from "react-icons/ri"
-import defi from "../assets/Defi.png"
+// import defi from "../assets/Defi.png"
 import wiki from "../assets/Wiki.png"
 import { useNavigate } from "react-router-dom"
 function Whale() {
