@@ -47,7 +47,7 @@ app.post('/api/insertHolders', (req, res) => {
     });
 });
 
-app.get('/api/insertHolderInfo/', (req, res) => {
+app.get('/api/insertHolderInfo', (req, res) => {
     const address = req.body.address;
     const username = req.body.username;
     const phone = req.body.phone;

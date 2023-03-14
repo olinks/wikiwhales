@@ -8,12 +8,23 @@ import axios from "axios"
 
 function AddWhales() {
   const [currentBalance,setCurrentBalance] = useState([]);
+const [userName,setUserName] = useState("");
+const [title,setTitle] = useState("");
+const [text,setText] = useState("");
   function fetchbalance (e){
     const addy = e.target.value;
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
     .then((result) => {
       setCurrentBalance(result.data);
     });
+
+  }
+  function submitWhale(e){
+    axios.post(`https://wikiwhales-server.vercel.app/api/insertHolderInfo`,{})
+    .then((res) =>{
+      alert('Saved');
+    }
+    )
   }
   return (
     <div>
@@ -22,6 +33,7 @@ function AddWhales() {
           <h2 className='font-bold text-white text-[30px] font-lexend'>
             ADD TO WHALES
           </h2>
+            <form onSubmit={submitWhale} >
           <div className="flex flex-col gap-3">
             <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
               <AiOutlineUser className='' />
@@ -62,14 +74,15 @@ function AddWhales() {
                 placeholder='Phone Number'
               />
             </div>
-            <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
+            {/* <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'> */}
               <input
                 type='submit'
                 className='bg-transparent pl-3 outline-none text-[#b5b5b5] w-[100%] placeholder:text-[#3C3E4D]'
                 name="submit"
               />
-            </div>
+            {/* </div> */}
           </div>
+            </form>
         </div>
       </IconContext.Provider>
     </div>

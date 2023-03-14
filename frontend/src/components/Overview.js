@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import axios from 'axios'
 import wiki1 from "../assets/Wiki1.png"
+import convertToDecimal from './convertToDecimal'
 // import { Whales } from "../data/data"
 function Overview() {
   const [tokenSupply, setTokenSupply] = useState('');
@@ -17,28 +18,9 @@ function Overview() {
   useEffect(() => {
     axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
     .then((res) => {
-      console.log(res.data.usd);
-      // console.log((res.data.usd)*(10**18));
-      // setTokenPrice((res.data.usd)/(10**8));
-      // setTokenPrice((res.data.usd)*(10**2));
       setTokenPrice((res.data.usd));
     })
   },[])
-
-  function convertToDecimal(n){
-    // sanity check - is it exponential number
-  const str = n.toString();
-  if (str.indexOf('e') !== -1) {
-    const exponent = parseInt(str.split('-')[1], 10);
-    // Unfortunately I can not return 1e-8 as 0.00000001, because even if I call parseFloat() on it,
-    // it will still return the exponential representation
-    // So I have to use .toFixed()
-    const result = n.toFixed(exponent);
-    return result;
-  } else {
-    return n;
-  }
-  }
   
   return (
     <div className='md:px-32 px-4   mb-14'>

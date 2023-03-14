@@ -4,7 +4,7 @@ import Home from "./Pages/Home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import AddWhales from "./Pages/AddWhales"
 import EditWhale from "./Pages/EditWhale"
-import Data_tables from "./components/Data_tables"
+import Datatables from "./components/MyDatatable"
 function App() {
   return (
     <div className='w-full '>
@@ -13,7 +13,7 @@ function App() {
         <Route path="/" exact  element={<Home/>}/>
         <Route path="add-whales" element={<AddWhales/>}/>
         <Route path='/details/:id' element={<EditWhale />} />
-        <Route path='/datatable' element={<Data_tables />} />
+        <Route path='/datatable' element={<Datatables />} />
       </Routes>
      </Router>
     </div>
