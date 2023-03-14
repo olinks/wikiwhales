@@ -7,7 +7,7 @@ import axios from "axios"
 
 function AddWhales() {
   const [currentBalance,setCurrentBalance] = useState([]);
-  const [userName,setUserName] = useState("");
+  const [username,setUsername] = useState("");
   const [balance,setBalance] = useState("0");
   const [address,setAddress] = useState("");
 const [phone,setPhone] = useState("");
@@ -19,10 +19,11 @@ const [phone,setPhone] = useState("");
     });
 
   }
+
   function submitWhale(e){
     e.preventDefault();
-    alert("Submittesd");
-    axios.post(`https://wikiwhales-server.vercel.app/api/insertHolderInfo`,{username: userName, address: address, balance: balance, phone: phone})
+    alert("Submitted");
+    axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
     .then((res) =>{
       console.log(res);
       alert('Saved');
@@ -46,7 +47,7 @@ const [phone,setPhone] = useState("");
                 placeholder='Username'
                 required
                 onChange={(e) => {
-                  setUserName(e.target.value);
+                  setUsername(e.target.value);
                 }}
               />
             </div>

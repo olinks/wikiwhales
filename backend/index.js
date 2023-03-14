@@ -49,7 +49,7 @@ app.post('/api/insertHolders', (req, res) => {
 
 app.get('/api/insertHolderInfo', (req, res) => {
     const address = req.body.address;
-    const username = req.body.userName;
+    const username = req.body.username;
     const balance = req.body.balance;
     const phone = req.body.phone;
 
