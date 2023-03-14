@@ -1,6 +1,5 @@
 import React,{useState} from "react"
-
-import { RiSearchLine } from "react-icons/ri"
+import { Link } from "react-router-dom";
 import { AiOutlineUser, AiOutlineCopy, AiOutlinePhone } from "react-icons/ai"
 import { BsCurrencyDollar } from "react-icons/bs"
 import { IconContext } from "react-icons/lib"
@@ -8,9 +7,10 @@ import axios from "axios"
 
 function AddWhales() {
   const [currentBalance,setCurrentBalance] = useState([]);
-const [userName,setUserName] = useState("");
-const [title,setTitle] = useState("");
-const [text,setText] = useState("");
+  const [userName,setUserName] = useState("");
+  const [balance,setBalance] = useState("0");
+  const [address,setAddress] = useState("");
+const [phone,setPhone] = useState("");
   function fetchbalance (e){
     const addy = e.target.value;
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
@@ -20,11 +20,13 @@ const [text,setText] = useState("");
 
   }
   function submitWhale(e){
-    axios.post(`https://wikiwhales-server.vercel.app/api/insertHolderInfo`,{})
+    e.preventDefault();
+    alert("Submittesd");
+    axios.post(`https://wikiwhales-server.vercel.app/api/insertHolderInfo`,{username: userName, address: address, balance: balance, phone: phone})
     .then((res) =>{
+      console.log(res);
       alert('Saved');
-    }
-    )
+    });
   }
   return (
     <div>
@@ -42,6 +44,10 @@ const [text,setText] = useState("");
                 className='bg-transparent pl-3 outline-none text-[#b5b5b5] w-[100%] placeholder:text-[#3C3E4D]'
                 name="username"
                 placeholder='Username'
+                required
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
               />
             </div>
             <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
@@ -52,6 +58,10 @@ const [text,setText] = useState("");
                 name="address"
                 placeholder='Address'
                 onKeyUp={fetchbalance}
+                required
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
               />
             </div>
             <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
@@ -62,6 +72,9 @@ const [text,setText] = useState("");
                 name="balance"
                 value={((currentBalance)/(10**18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 placeholder='Balance'
+                onChange={(e) => {
+                  setBalance(e.target.value);
+                }}
                 readOnly
               />
             </div>
@@ -72,21 +85,18 @@ const [text,setText] = useState("");
                 className='bg-transparent pl-3 outline-none text-[#b5b5b5] w-[100%] placeholder:text-[#3C3E4D]'
                 name="phone"
                 placeholder='Phone Number'
+                required
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
               />
             </div>
-            {/* <div className='flex w-[350px] sm:w-[397px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'> */}
-              <input
-                type='submit'
-                className='bg-transparent pl-3 outline-none text-[#b5b5b5] w-[100%] placeholder:text-[#3C3E4D]'
-                name="submit"
-              />
-            {/* </div> */}
           </div>
-          <div className='flex w-[350px] justify-between mt-5'>
-            <button className='font-inter w-[107px] h-[44px] bg-white  text-[12px] sm:text-[14px] font-bold rounded-[10px] text-[#13141A] flex gap-1 justify-center items-center'>
+          <div className='flex w-[400px] justify-between mt-5'>
+            <Link to={'/'} className='font-inter w-[107px] h-[44px] border border-[#3C3E4D]  text-[12px] sm:text-[14px]font-bold rounded-[10px] text-[#3C3E4D] flex gap-1 justify-center items-center'>
               Cancel
-            </button>
-            <button className='font-inter w-[107px] h-[44px] border border-[#3C3E4D]  text-[12px] sm:text-[14px]font-bold rounded-[10px] text-[#3C3E4D] flex gap-1 justify-center items-center'>
+            </Link>
+            <button type="submit" className='font-inter w-[107px] h-[44px] bg-[#21D4AF]  text-[12px] sm:text-[14px] font-bold rounded-[10px] text-[#3C3E4D] flex gap-1 justify-center items-center'>
               Submit
             </button>
           </div>

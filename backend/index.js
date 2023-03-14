@@ -49,11 +49,12 @@ app.post('/api/insertHolders', (req, res) => {
 
 app.get('/api/insertHolderInfo', (req, res) => {
     const address = req.body.address;
-    const username = req.body.username;
+    const username = req.body.userName;
+    const balance = req.body.balance;
     const phone = req.body.phone;
 
     const sql ="INSERT INTO holders (address, balance, username, phone) VALUES (?,?,?,?)";
-    db.query(sql, (err, result) => {
+    db.query(sql,[address,balance,username,phone], (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
     });
 });

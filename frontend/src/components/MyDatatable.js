@@ -6,6 +6,7 @@ import convertToCurrency from "./convertToCurrency";
 
 function MyDatatable (){
     const [holderslist, setHoldersList] = useState([]);
+    const tokenSupply = 889167211299568.1;
 
     useEffect(() => {
         axios.get('https://wikiwhales-server.vercel.app/api/getWhales')
@@ -36,9 +37,9 @@ function MyDatatable (){
             name: "Username",
             selector: row => row.username,
             sortable: true,
-            maxWidth: '60px',
+            maxWidth: '120px',
             cell: row => (
-                <h5 className="w-[33px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme">
+                <h5 className=" sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme">
                     <Link to={`details/${row.id}`}>{row.username}</Link>
                 </h5>
                 ),
@@ -60,7 +61,7 @@ function MyDatatable (){
             cell: row => (
                 <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
                 {/* {(row.balance / 10**18).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
-                {convertToCurrency((row.balance / 10**18))}
+                {convertToCurrency((row.balance / 10**18).toFixed(2))}
                 </h5>
             ),
 
@@ -69,9 +70,10 @@ function MyDatatable (){
             name:"Percentage",
             selector: row => row.percentage,
             sortable: true,
+            maxWidth: "120px",
             cell: row =>(
-                <h5 className='w-[125px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                    {row.percentage}
+                <h5 className='sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+                    {((((row.balance) / (10**18) )/tokenSupply)*100).toFixed(2)}%
                 </h5>
             )
         },
@@ -80,13 +82,12 @@ function MyDatatable (){
             selector: row => row.value,
             sortable: true,
             cell: row => (
-                <h5 className='w-[109px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
-                    $ {convertToCurrency((row.balance /(10**8) * price))}
+                <h5 className='sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+                    ${convertToCurrency(((row.balance * price) /10**18).toFixed(2))}
                 </h5>
             ),
         }
     ];
-    const data = holderslist;
     createTheme('solarized', {
         text: {
             primary: 'white',
@@ -115,7 +116,7 @@ function MyDatatable (){
                 <DataTable
                 title="Whales"
                     columns={columns}
-                    data={data}
+                    data={holderslist}
                     fixedHeader
                     pagination
                     theme="solarized"

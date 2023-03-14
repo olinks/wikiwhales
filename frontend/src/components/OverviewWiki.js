@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from "react"
 import axios from 'axios'
 import wiki1 from "../assets/Wiki1.png"
-import { Whales } from "../data/data"
+import convertToDecimal from "./convertToDecimal"
 function Overview() {
+  const [price, setPrice] = useState('');
+  useEffect(() => {
+    axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
+    .then((res) => {
+    setPrice((res.data.usd));
+    })
+    },[])
+
   const [tokenSupply, setTokenSupply] = useState("");
   useEffect(() =>{
 
@@ -29,7 +37,7 @@ function Overview() {
                 Current token Price
               </h5>
               <h4 className='font-space font-bold text-[20px] lg:text-[32px] text-dimWhite mt-2'>
-                $0.00000088
+                ${convertToDecimal(price)}
               </h4>
             </div>
           </div>
@@ -54,25 +62,31 @@ function Overview() {
         </div>
         <div className='flex flex-col sm:flex-row flex-wrap w-[100%] mt-3 sm:mt-0  sm:w-[800px] lg:w-[550px] sm:px-4 px-0  gap-4'>
                 <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
-                <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
-                  API Token Supply
-                </h5>
-                <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
-                  {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </h4>
+                  <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
+                    Token Supply
+                  </h5>
+                  <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
+                    {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </h4>
               </div>
-          {Whales.map((items, i) => {
-            return (
-              <div key={i} className=' sm:w-[220px] h-[82px] bg-[#1A1B23] border border-[#3C3E4D] rounded-[10px] p-4'>
-                <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
-                  {items.title}
-                </h5>
-                <h4 className='font-space text-[#F6F6F6] text-[20px] font-bold'>
-                  {items.amount}
-                </h4>
+
+                <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
+                  <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
+                    Circulating Supply
+                  </h5>
+                  <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
+                    {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </h4>
               </div>
-            )
-          })}
+
+                <div className=' sm:w-[220px] h-[82px] border border-[#3C3E4D] rounded-[10px] p-4'>
+                  <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
+                    Number Of Holders
+                  </h5>
+                  <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
+                    {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </h4>
+              </div>
         </div>
       </div>
     </div>
