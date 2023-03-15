@@ -6,19 +6,20 @@ import axios from 'axios';
 
 import { BsArrowLeft } from "react-icons/bs"
 import Header from "../components/Header"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 import { IconContext } from "react-icons/lib"
 import Backdrop from "@mui/material/Backdrop"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import Fade from "@mui/material/Fade"
-import Button from "@mui/material/Button"
+// import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import convertToCurrency from "../components/convertToCurrency";
+import fetchbalance from "../data/FetchBalance";
 
 function EditWhale() {
   const { id } = useParams()
-  const details = Detailss.find((details) => details.id === id)
+  // const details = Detailss.find((details) => details.id === id)
   const [holderData, setHolderData] = useState({});
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
@@ -63,7 +64,7 @@ function EditWhale() {
     .then((res) => {
       setHolderData(res.data[0]);
       setEditedAddress(holderData.address);
-      console.log(holderData);
+      setEditedBalance(fetchbalance(holderData.address));
     });
   })
   return (
@@ -73,10 +74,10 @@ function EditWhale() {
         <IconContext.Provider value={{ color: "white", size: "30px" }}>
           <BsArrowLeft onClick={handleClick} />
         </IconContext.Provider>
-        <div className=' w-[100%] sm:w-[708px]  h-[260px] sm:h-[298px] bg-[#1A1B23] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-7 mt-5'>
+        <div className=' w-[100%] sm:w-[708px]  h-[270px] sm:h-[298px] bg-[#1A1B23] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-7 mt-5'>
           <div className=' '>
-            <div>
-              <h5 className='text-[#838699] text-[14px]  font-normal '>
+            <div className="break-words sm:break-words">
+              <h5 className='text-[#838699]  font-normal break-words'>
                 Address
               </h5>
               <h4 className='font-space font-bold text-[12px] sm:text-[32px] text-dimWhite mt-2 border-b border-[#41434F] pb-1 overme '>
@@ -148,6 +149,9 @@ function EditWhale() {
                           className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
                           placeholder='Username...'
                           value={holderData.username}
+                          onChange={(e) => {
+                            setEditedUsername(e.target.value);
+                          }}
                         />
                       </div>
                     </div>
@@ -161,6 +165,9 @@ function EditWhale() {
                           className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
                           placeholder='Enter Phone Number'
                           value={holderData.phone}
+                          onChange={(e) => {
+                            setEditedPhone(e.target.value);
+                          }}
                         />
                       </div>
                     </div>
@@ -185,7 +192,7 @@ function EditWhale() {
             {convertToCurrency((holderData.balance / 10**18).toFixed(2))} WKC
           </h4>
           <h4 className='font-space text-[#838699] text-[16px] font-normal mt-1'>
-            ${convertToCurrency(((row.balance * price) /10**18).toFixed(2))}
+            ${convertToCurrency(((holderData.balance * price) /10**18).toFixed(2))}
           </h4>
         </div>
       </div>
