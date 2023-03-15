@@ -97,10 +97,10 @@ function EditWhale() {
                 variant='h6'
                 component='h2'
               >
-                <div className=' w-[100%]   h-[300px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-7 mt-5'>
+                <div className=' w-[100%]   h-[310px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-5 mt-5'>
                   <div className=' '>
                     <div>
-                      <h5 className='text-[#838699] text-[14px]  font-normal '>
+                      <h5 className='font-space text-[#838699] text-[14px]  font-normal '>
                         Address
                       </h5>
                       <h4 className='font-space font-bold text-[16px] text-dimWhite mt-2 border-b border-[#41434F] pb-1  overmee'>
@@ -111,29 +111,29 @@ function EditWhale() {
                       <h5 className='text-[#838699] text-[14px]  font-normal mb-2 '>
                         Username
                       </h5>
-                      <div className='flex w-[100%]] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px] border-[#838699]'>
+                      <div className='flex w-[100%] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px] border-[#838699]'>
                         <input
                           type='text'
-                          className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
+                          className='font-space bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
                           placeholder='Enter Coin Name / Address'
                           value={details.username}
                         />
                       </div>
                     </div>
                     <div className='mt-1 mb-3'>
-                      <h5 className='text-[#838699] text-[14px]  font-normal mb-2 '>
+                      <h5 className='font-space text-[#838699] text-[14px]  font-normal mb-2 '>
                         Phone Number
                       </h5>
                       <div className='flex w-[100%]  justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px]  border-[#838699]'>
                         <input
                           type='text'
-                          className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
+                          className='font-space bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
                           placeholder='Enter Coin Name / Address'
                         />
                       </div>
                     </div>
 
-                    <button className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
+                    <button className='font-inter text-[14px] mt-5 font-bold text-white w-[77px] h-[33px]  sm:w-[107px] sm:h-[44px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
                       Save
                     </button>
                   </div>
