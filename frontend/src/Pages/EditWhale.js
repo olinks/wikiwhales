@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Detailss } from "../data/data"
 import { Details } from "../data/data"
 import { useNavigate, useParams } from "react-router-dom"
+import axios from 'axios';
 
 import { BsArrowLeft } from "react-icons/bs"
 import Header from "../components/Header"
@@ -13,13 +14,13 @@ import Modal from "@mui/material/Modal"
 import Fade from "@mui/material/Fade"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
+import convertToCurrency from "../components/convertToCurrency";
+
 function EditWhale() {
   const { id } = useParams()
   const details = Detailss.find((details) => details.id === id)
+  const [holderData, setHolderData] = useState({});
   const navigate = useNavigate()
-  const handleClick = () => {
-    navigate("/")
-  }
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -34,7 +35,37 @@ function EditWhale() {
     boxShadow: 24,
     p: 4,
   }
-
+  const handleClick = () => {
+    navigate("/")
+  }
+  const [editedUsername, setEditedUsername] = useState("");
+  const [editedPhone, setEditedPhone] = useState("");
+  const [editedBalance, setEditedBalance] = useState("");
+  const [editedAddress, setEditedAddress] = useState("");
+  const [price, setPrice] = useState('');
+  useEffect(() => {
+    axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
+    .then((res) => {
+    setPrice((res.data.usd));
+    })
+    },[]);
+  const submitEdit = () =>{
+    alert("Submitting....");
+    axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: editedUsername, address: editedAddress, balance: editedBalance, phone: editedPhone})
+    // axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    .then((res) =>{
+      console.log(res.data);
+    });
+  }
+  useEffect(() => {
+    // axios.get(`http://localhost:3001/api/getHolderById/${id}`)
+    axios.get(`https://wikiwhales-server.vercel.app/api/getHolderById/${id}`)
+    .then((res) => {
+      setHolderData(res.data[0]);
+      setEditedAddress(holderData.address);
+      console.log(holderData);
+    });
+  })
   return (
     <div>
       <Header />
@@ -48,8 +79,8 @@ function EditWhale() {
               <h5 className='text-[#838699] text-[14px]  font-normal '>
                 Address
               </h5>
-              <h4 className='font-space font-bold text-[16px] sm:text-[32px] text-dimWhite mt-2 border-b border-[#41434F] pb-1 overme '>
-                {details.address}
+              <h4 className='font-space font-bold text-[12px] sm:text-[32px] text-dimWhite mt-2 border-b border-[#41434F] pb-1 overme '>
+                {holderData.address}
               </h4>
             </div>
             <div className='mt-1'>
@@ -57,7 +88,7 @@ function EditWhale() {
                 Username
               </h5>
               <h4 className='font-space font-bold text-[16px] sm:text-[20px] text-dimWhite mt-1 '>
-                {details.username}
+                {holderData.username}
               </h4>
             </div>
             <div className='mt-2'>
@@ -65,7 +96,7 @@ function EditWhale() {
                 Phonenumber
               </h5>
               <h4 className='font-space font-bold text-[16px] sm:text-[20px] text-dimWhite mt-1 '>
-                {details.username}
+                {holderData.phone}
               </h4>
             </div>
             <button
@@ -104,7 +135,7 @@ function EditWhale() {
                         Address
                       </h5>
                       <h4 className='font-space font-bold text-[16px] text-dimWhite mt-2 border-b border-[#41434F] pb-1  overmee'>
-                        {details.address}
+                        {holderData.address}
                       </h4>
                     </div>
                     <div className='mt-1 mb-2'>
@@ -115,8 +146,8 @@ function EditWhale() {
                         <input
                           type='text'
                           className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
-                          placeholder='Enter Coin Name / Address'
-                          value={details.username}
+                          placeholder='Username...'
+                          value={holderData.username}
                         />
                       </div>
                     </div>
@@ -128,12 +159,15 @@ function EditWhale() {
                         <input
                           type='text'
                           className='bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
-                          placeholder='Enter Coin Name / Address'
+                          placeholder='Enter Phone Number'
+                          value={holderData.phone}
                         />
                       </div>
                     </div>
 
-                    <button className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
+                    <button
+                    onClick={submitEdit}
+                    className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
                       Save
                     </button>
                   </div>
@@ -148,10 +182,10 @@ function EditWhale() {
             Balance
           </h5>
           <h4 className='font-space text-[#F6F6F6] text-[20px] font-bold'>
-            {details.quantity} WKC
+            {convertToCurrency((holderData.balance / 10**18).toFixed(2))} WKC
           </h4>
           <h4 className='font-space text-[#838699] text-[16px] font-normal mt-1'>
-            ${details.quantity}
+            ${convertToCurrency(((row.balance * price) /10**18).toFixed(2))}
           </h4>
         </div>
       </div>

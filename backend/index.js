@@ -47,15 +47,31 @@ app.post('/api/insertHolders', (req, res) => {
     });
 });
 
-app.get('/api/insertHolderInfo', (req, res) => {
+app.post('/api/insertHolderInfo', (req, res) => {
     const address = req.body.address;
     const username = req.body.username;
     const balance = req.body.balance;
     const phone = req.body.phone;
+    const status = '1';
 
-    const sql ="INSERT INTO holders (address, balance, username, phone) VALUES (?,?,?,?)";
-    db.query(sql,[address,balance,username,phone], (err, result) => {
+    const sql ="INSERT INTO holders (address, balance, username, phone, status) VALUES (?,?,?,?,?)";
+    db.query(sql,[address,balance,username,phone, status], (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
+        // err ? res.send('0') : result ? res.send('1') : res.send('NULL');
+    });
+});
+
+app.post('/api/updateHolderInfo', (req, res) => {
+    const address = req.body.address;
+    const username = req.body.username;
+    const balance = req.body.balance;
+    const phone = req.body.phone;
+    const status = '1';
+
+    const sql ="UPDATE holders SET balance=?, username=?, phone=?, status=? WHERE address=?";
+    db.query(sql,[address,balance,username,phone, status], (err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+        // err ? res.send('0') : result ? res.send('1') : res.send('NULL');
     });
 });
 
@@ -75,6 +91,21 @@ app.get('/api/getWhales',(req, res) => {
     })
 })
 
+app.get('/api/getHolderByAddress/:address',(req, res) => {
+    const addy = req.params.address;
+    const sql = "SELECT * FROM holders WHERE address=?";
+    db.query(sql,[addy],(err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+    })
+})
+
+app.get('/api/getHolderById/:id',(req, res) => {
+    const addy = req.params.id;
+    const sql = "SELECT * FROM holders WHERE id=?";
+    db.query(sql,[addy],(err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+    })
+})
 app.get('/api/getHolder',(req, res) => {
     const addy = req.body.address;
     const sql = "SELECT * FROM holders WHERE address=?";
@@ -115,7 +146,6 @@ new Promise(async (resolve, reject) => {
   if (response) {
     // success
     const json = response.data['wiki-cat'];
-    console.log(json.usd);
     res.send(json);
     resolve(json);
   }
@@ -135,7 +165,6 @@ app.get('/api/getTokenCirculatingSupply', (req,res) => {
     axios.get(`https://api.bscscan.com/api?module=stats&action=tokenCsupply&contractaddress=${options.contractaddress}}&apikey=${options.apikey}`)
     .then((result) => {
         res.send(result.data.result);
-        console.log(result.data);
     })
 });
 

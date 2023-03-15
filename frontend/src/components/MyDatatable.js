@@ -12,7 +12,6 @@ function MyDatatable (){
         axios.get('https://wikiwhales-server.vercel.app/api/getWhales')
         .then((res) => {
         setHoldersList(res.data);
-        // console.log(res.data);
         })
     },[])
 
@@ -50,7 +49,7 @@ function MyDatatable (){
             sortable: true,
             cell: row => (
                 <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] '>
-                    <Link to={`details/${row.id}`}>{row.address.slice(0,14)}...</Link>
+                    <Link to={`details/${row.id}`}>{row.address /*.slice(0,14)*/}...</Link>
                 </h5>
             ),
         },

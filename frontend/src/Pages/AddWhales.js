@@ -1,8 +1,9 @@
-import React,{useState} from "react"
-import { Link } from "react-router-dom";
+import React,{useState, useEffect} from "react"
+import { Link, Navigate, redirect } from "react-router-dom";
 import { AiOutlineUser, AiOutlineCopy, AiOutlinePhone } from "react-icons/ai"
 import { BsCurrencyDollar } from "react-icons/bs"
 import { IconContext } from "react-icons/lib"
+import fetchbalance from "../data/FetchBalance";
 import axios from "axios"
 
 function AddWhales() {
@@ -10,24 +11,35 @@ function AddWhales() {
   const [username,setUsername] = useState("");
   const [balance,setBalance] = useState("0");
   const [address,setAddress] = useState("");
-const [phone,setPhone] = useState("");
-  function fetchbalance (e){
-    const addy = e.target.value;
-    axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
-    .then((result) => {
-      setCurrentBalance(result.data);
-    });
+  const [phone,setPhone] = useState("");
+  // function fetchbalance (e){
+  //   const addy = e.target.value;
+  //     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
+  //     .then((result) => {
+  //       setCurrentBalance(result.data);
+  //     });      
+  // }
 
+   const redirectToPage = (i) =>{
+    // Navigate(`/${i}`);
+    window.location.href =`/details/${i}`;
   }
 
   function submitWhale(e){
     e.preventDefault();
-    alert("Submitted");
-    // axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
-    axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    alert("Submitting....");
+    axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    // axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
     .then((res) =>{
       console.log(res);
-      alert('Saved');
+      console.log("data =>{");
+      console.log(res.data);
+      console.log("insertId =>{");
+      console.log(res.data.insertId);
+      // if(res.data.status == 200){
+        alert("successfully added");
+        redirectToPage(res.data.insertId);
+      // }
     });
   }
   return (
@@ -59,7 +71,9 @@ const [phone,setPhone] = useState("");
                 className='bg-transparent pl-3 outline-none text-[#b5b5b5] w-[100%] placeholder:text-[#3C3E4D]'
                 name="address"
                 placeholder='Address'
-                onKeyUp={fetchbalance}
+                onKeyUp={(e) => {
+                  setBalance(fetchbalance(e.target.value));
+                }}
                 required
                 onChange={(e) => {
                   setAddress(e.target.value);
@@ -103,10 +117,10 @@ const [phone,setPhone] = useState("");
             </button>
           </div>
             </form>
-        </div>
+            </div>
       </IconContext.Provider>
     </div>
   )
 }
 
-export default AddWhales
+export default AddWhales;
