@@ -46,7 +46,7 @@ function Overview() {
               <h5 className='text-[#838699] text-[14px]  font-normal'>
                 Current token Price 
                 {
-                  change > 0 ? <i className='m-2 font-space font-bold text-[green]'>+{change.toFixed(2)}%</i> : <i className='m-2 font-space font-bold text-[red]'>-{change.toFixed(2)}%</i>
+                  change > 0 ? <i className='m-2 font-space font-bold text-[green]'>+{Number(change).toFixed(2)}%</i> : <i className='m-2 font-space font-bold text-[red]'>{Number(change).toFixed(2)}%</i>
                 }
               </h5>
               <h4 className='font-space font-bold text-[20px] lg:text-[32px] text-dimWhite mt-2'>

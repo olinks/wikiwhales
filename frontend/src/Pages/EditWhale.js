@@ -29,7 +29,7 @@ function EditWhale() {
       setEditedAddress(holderData.address);
       fetchbalance(holderData.address);
     });
-  })
+  },[id, holderData.address])
 
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
@@ -92,7 +92,7 @@ function EditWhale() {
                 Address
               </h5>
               <h4 className='font-space font-bold text-[12px] sm:text-[32px] text-dimWhite mt-2 border-b border-[#41434F] pb-1 overme '>
-                {holderData.address ? holderData.address.slice(0,20) : holderData.address}...
+                {holderData.address ? String(holderData.address).slice(0,24) : holderData.address}...
               </h4>
             </div>
             <div className='mt-1'>
