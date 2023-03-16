@@ -121,8 +121,8 @@ function MyDatatable (){
 
     return(
         <div>
-            <div className="sm:px-5 mx-20">
-                <DataTable className="mx-5"
+            <div className="sm:px-5 lg:mx-20">
+                <DataTable className="lg:mx-5"
                 title="Whales"
                     columns={columns}
                     data={holderslist}
