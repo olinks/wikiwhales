@@ -12,6 +12,7 @@ function MyDatatable (){
         axios.get('https://wikiwhales-server.vercel.app/api/getWhales')
         .then((res) => {
         setHoldersList(res.data);
+        console.log(res.data);
         })
     },[])
 
@@ -30,15 +31,15 @@ function MyDatatable (){
             selector: row => row.id,
             sortable: true,
             maxWidth: '10px',
-            cell: row => (<h5 className="w-[33px] text-white sm:text-[12px] text-[8px] lg:text-[14px]">{row.id}</h5>),
+            cell: row => (<h5 className="w-[33px] text-white sm:text-[16px] text-[16px] lg:text-[16px]">{row.id}</h5>),
         },
         {
             name: "Username",
             selector: row => row.username,
             sortable: true,
-            maxWidth: '120px',
+            maxWidth: '170px',
             cell: row => (
-                <h5 className=" sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] overme">
+                <h5 className=" sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-[#21D4AF] overme">
                     <Link to={`details/${row.id}`}>{row.username}</Link>
                 </h5>
                 ),
@@ -47,8 +48,9 @@ function MyDatatable (){
             name: "Address",
             selector: row => row.address,
             sortable: true,
+            maxWidth: "250px",
             cell: row => (
-                <h5 className='w-[287px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-[#21D4AF] '>
+                <h5 className='w-[287px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-[#21D4AF] '>
                     <Link to={`details/${row.id}`}>{row.address.slice(0,20)}...</Link>
                 </h5>
             ),
@@ -57,8 +59,9 @@ function MyDatatable (){
             name: "Balance",
             selector: row => row.balance,
             sortable: true,
+            maxWidth: "250px",
             cell: row => (
-                <h5 className='w-[234px] sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white '>
+                <h5 className='w-[200px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-white '>
                 {/* {(row.balance / 10**18).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
                 {convertToCurrency((row.balance / 10**18).toFixed(2))}
                 </h5>
@@ -69,9 +72,9 @@ function MyDatatable (){
             name:"Percentage",
             selector: row => row.percentage,
             sortable: true,
-            maxWidth: "120px",
+            maxWidth: "50px",
             cell: row =>(
-                <h5 className='sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+                <h5 className='sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-white'>
                     {((((row.balance) / (10**18) )/tokenSupply)*100).toFixed(2)}%
                 </h5>
             )
@@ -80,13 +83,20 @@ function MyDatatable (){
             name:"Value",
             selector: row => row.value,
             sortable: true,
+            maxWidth: "180px",
             cell: row => (
-                <h5 className='sm:text-[12px] lg:text-[14px] text-[8px] font-inter font-normal text-white'>
+                <h5 className='sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-white'>
                     ${convertToCurrency(((row.balance * price) /10**18).toFixed(2))}
                 </h5>
             ),
         }
     ];
+    const paginationOptions = {
+        rowsPerPageText: 'Rows per page:',
+        rangeSeparatorText: 'of',
+        selectAllRowsItem: true,
+        selectAllRowsItemText: 'All',
+    };
     createTheme('solarized', {
         text: {
             primary: 'white',
@@ -111,13 +121,15 @@ function MyDatatable (){
 
     return(
         <div>
-            <div className="sm:px-5 lg:px-20">
-                <DataTable
+            <div className="sm:px-5 mx-20">
+                <DataTable className="mx-5"
                 title="Whales"
                     columns={columns}
                     data={holderslist}
                     fixedHeader
                     pagination
+                    paginationPerPage={25}
+                    paginationComponentOptions={paginationOptions}
                     theme="solarized"
                     highlightOnHover="true"
                     >

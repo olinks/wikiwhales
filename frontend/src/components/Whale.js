@@ -86,6 +86,7 @@ function Whale() {
               placeholder='Enter Coin Name / Address'
             />
           </div>
+          
         </div>
        </div>
       </IconContext.Provider>
