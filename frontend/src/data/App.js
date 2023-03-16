@@ -10,7 +10,7 @@ function App() {
      <Router>
       <Routes>
         <Route path="/" exact  element={<Home/>}/>
-        <Route path="add-whales" element={<AddWhales/>}/>
+        {/* <Route path="add-whales" element={<AddWhales/>}/> */}
         <Route path='/details/:id' element={<EditWhale />} />
       </Routes>
      </Router>

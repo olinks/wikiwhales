@@ -4,14 +4,18 @@ import wiki1 from "../assets/Wiki1.png"
 import convertToDecimal from "./convertToDecimal"
 function Overview() {
   const [price, setPrice] = useState('');
+  const [change, setChange] = useState('');
   useEffect(() => {
     axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
     .then((res) => {
     setPrice((res.data.usd));
+    setChange((res.data.usd_24h_change));
+    console.log("Price Data",res.data)
     })
     },[])
 
   const [tokenSupply, setTokenSupply] = useState("");
+  const [tokenCSupply, setTokenCSupply] = useState("");
   useEffect(() =>{
 
     axios.get('https://wikiwhales-server.vercel.app/api/getTokenSupply')
@@ -19,7 +23,13 @@ function Overview() {
       setTokenSupply(res.data);
     });
 
-  },[tokenSupply]);
+    axios.get('https://wikiwhales-server.vercel.app/api/getTokenCirculatingSupply')
+    .then((res) => {
+      console.log("Csupply", res);
+      setTokenCSupply(res.data);
+    });
+
+  },[tokenSupply,tokenCSupply]);
   
   return (
     <div className='md:px-32 px-4   mb-14'>
@@ -34,7 +44,10 @@ function Overview() {
             <img className='lg:w-[74px] w-[60px]' src={wiki1} alt='' />
             <div>
               <h5 className='text-[#838699] text-[14px]  font-normal'>
-                Current token Price
+                Current token Price 
+                {
+                  change > 0 ? <i className='m-2 font-space font-bold text-[green]'>+{change.toFixed(2)}%</i> : <i className='m-2 font-space font-bold text-[red]'>-{change.toFixed(2)}%</i>
+                }
               </h5>
               <h4 className='font-space font-bold text-[20px] lg:text-[32px] text-dimWhite mt-2'>
                 ${convertToDecimal(price)}
@@ -47,7 +60,7 @@ function Overview() {
                 Fully diluted market cap
               </h5>
               <h5 className='text-[16px] font-space text-white font-normal mt-2'>
-                $13,898,655.05
+                $8,712,705.81
               </h5>
             </div>
             <div className='flex items-center gap-3'>
@@ -75,7 +88,7 @@ function Overview() {
                     Circulating Supply
                   </h5>
                   <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
-                    {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {(tokenCSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </h4>
               </div>
 
@@ -84,7 +97,7 @@ function Overview() {
                     Number Of Holders
                   </h5>
                   <h4 className='font-space text-[#F6F6F6] text-[16px] font-bold'>
-                    {(tokenSupply/(10 ** 18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    38K Holders{""}
                   </h4>
               </div>
         </div>

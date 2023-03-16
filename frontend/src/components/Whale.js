@@ -1,4 +1,5 @@
-import React from "react"
+import React, {useState} from "react"
+import axios from 'axios'
 import { IconContext } from "react-icons/lib"
 import { RiSearchLine } from "react-icons/ri"
 // import defi from "../assets/Defi.png"
@@ -14,6 +15,43 @@ import { AiOutlineUser, AiOutlineCopy, AiOutlinePhone } from "react-icons/ai"
 import { BsCurrencyDollar } from "react-icons/bs"
 function Whale() {
 
+  const [username,setUsername] = useState("");
+  const [balance,setBalance] = useState("0");
+  const [address,setAddress] = useState("");
+  const [phone,setPhone] = useState("");
+
+
+   const redirectToPage = (i) =>{
+    // Navigate(`/${i}`);
+    window.location.href =`/details/${i}`;
+  }
+
+  function submitWhale(e){
+    e.preventDefault();
+    alert("Submitting....");
+    axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    // axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    .then((res) =>{
+      console.log(res);
+      console.log("data =>{");
+      console.log(res.data);
+      console.log("insertId =>{");
+      console.log(res.data.insertId);
+      const id = res.data.insertId;
+      // if(res.data.status == 200){
+        alert("successfully added");
+        redirectToPage(id);
+      // }
+    });
+  }
+  function fetchbalance (e){
+    const addy = e.target.value;
+    axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
+    // axios.get(`http://localhost:3001/api/getHolderBalance/0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff`)
+    .then((result) => {
+    setBalance(result.data);
+    });
+  }
  
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
@@ -75,7 +113,7 @@ function Whale() {
             Add Whale
           </button>
           </button> */}
-          <button onClick={handleClick} className='ont-inter w-[107px] h-[44px] bg-[#21D4AF]  text-[12px]  sm:text-[14px] font-bold rounded-[10px] text-[#13141A] flex justify-center items-center'>
+          <button onClick={handleOpen} className='ont-inter w-[107px] h-[44px] bg-[#21D4AF]  text-[12px]  sm:text-[14px] font-bold rounded-[10px] text-[#13141A] flex justify-center items-center'>
         + Add Whale
       </button>
 
@@ -103,41 +141,72 @@ function Whale() {
                     <IconContext.Provider
                       value={{ color: "white", size: "20px" }}
                     >
-                      <div className=' w-[100%]   h-[340px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-5 mt-5'>
+                      <div className=' w-[100%]   h-[480px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-5 mt-5'>
                         <h2 className='font-bold text-white text-[20px] mb-3 font-space'>
                           ADD TO WHALES
                         </h2>
                         <div className='flex flex-col gap-3'>
+                          <h4 className='font-space text-[#838699] text-[12px]  font-normal '>
+                          Username
+                          </h4>
                           <div className='flex w-[100%] text-[16px]  justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px]  sm:mt-0 border-[#838699]'>
                             <AiOutlineUser className='' />
                             <input
                               type='text'
                               className='font-space bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                              name="username"
                               placeholder='Username'
+                              required
+                              onChange={(e) => {
+                                setUsername(e.target.value);
+                              }}
                             />
                           </div>
-                          <div className='flex w-[100%] text-[16px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px]  sm:mt-0 border-[#838699]'>
-                            <BsCurrencyDollar className='' />
-                            <input
-                              type='text'
-                              className='font-space bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
-                              placeholder='Balance'
-                            />
-                          </div>
+                          <h4 className='font-space text-[#838699] text-[12px]  font-normal '>
+                          Address
+                          </h4>
                           <div className='flex w-[100%] text-[16px]  justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px]  sm:mt-0 border-[#838699]'>
                             <AiOutlineCopy className='' />
                             <input
                               type='text'
                               className='font-space bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                              name="address"
                               placeholder='Address'
+                              required
+                              onChange={(e) => {
+                                setAddress(e.target.value);
+                              }}
+                              onKeyUp={fetchbalance}
                             />
                           </div>
+                          <h4 className='font-space text-[#838699] text-[12px]  font-normal '>
+                          Token Balance
+                          </h4>
+                          <div className='flex w-[100%] text-[16px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px]  sm:mt-0 border-[#838699]'>
+                            <BsCurrencyDollar className='' />
+                            <input
+                              type='text'
+                              className='font-space bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                              name="balance"
+                              value={((balance)/(10**18)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              placeholder='Balance'
+                              readOnly
+                            />
+                          </div>
+                          <h4 className='font-space text-[#838699] text-[12px]  font-normal '>
+                          Phone
+                          </h4>
                           <div className='flex w-[100%] text-[16px]  justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px]  sm:mt-0 border-[#838699]'>
                             <AiOutlinePhone className='' />
                             <input
                               type='text'
                               className='font-space bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                              name="phone"
                               placeholder='Phone Number'
+                              required
+                              onChange={(e) => {
+                                setPhone(e.target.value);
+                              }}
                             />
                           </div>
                         </div>
@@ -145,7 +214,10 @@ function Whale() {
                           <button onClick={handleClose} className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  sm:w-[107px] sm:h-[44px]  flex justify-center items-center border border-[#5253E9] rounded-[10px]'>
                             Cancel
                           </button>
-                          <button className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  sm:w-[107px] sm:h-[44px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
+                          <button 
+                          className='font-inter text-[14px] mt-3 font-bold text-white w-[77px] h-[33px]  sm:w-[107px] sm:h-[44px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'
+                          onClick={submitWhale}
+                          >
                             Submit
                           </button>
                         </div>

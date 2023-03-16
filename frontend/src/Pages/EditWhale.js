@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Detailss } from "../data/data"
 import { Details } from "../data/data"
 import { useNavigate, useParams } from "react-router-dom"
 import axios from 'axios';
@@ -15,12 +14,23 @@ import Fade from "@mui/material/Fade"
 // import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import convertToCurrency from "../components/convertToCurrency";
-import fetchbalance from "../data/FetchBalance";
+// import fetchbalance from "../data/FetchBalance";
 
 function EditWhale() {
   const { id } = useParams()
   // const details = Detailss.find((details) => details.id === id)
   const [holderData, setHolderData] = useState({});
+
+  useEffect(() => {
+    // axios.get(`http://localhost:3001/api/getHolderById/${id}`)
+    axios.get(`https://wikiwhales-server.vercel.app/api/getHolderById/${id}`)
+    .then((res) => {
+      setHolderData(res.data[0]);
+      setEditedAddress(holderData.address);
+      fetchbalance(holderData.address);
+    });
+  })
+
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
@@ -44,12 +54,15 @@ function EditWhale() {
   const [editedBalance, setEditedBalance] = useState("");
   const [editedAddress, setEditedAddress] = useState("");
   const [price, setPrice] = useState('');
-  useEffect(() => {
-    axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
-    .then((res) => {
-    setPrice((res.data.usd));
-    })
-    },[]);
+
+  function fetchbalance (e){
+    axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${e}`)
+    // axios.get(`http://localhost:3001/api/getHolderBalance/0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff`)
+    .then((result) => {
+    setEditedBalance(result.data);
+    console.log()
+    });
+  }
   const submitEdit = () =>{
     alert("Submitting....");
     axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: editedUsername, address: editedAddress, balance: editedBalance, phone: editedPhone})
@@ -58,15 +71,13 @@ function EditWhale() {
       console.log(res.data);
     });
   }
-  useEffect(() => {
-    // axios.get(`http://localhost:3001/api/getHolderById/${id}`)
-    axios.get(`https://wikiwhales-server.vercel.app/api/getHolderById/${id}`)
+    useEffect(() => {
+    axios.get('https://wikiwhales-server.vercel.app/api/getWikicatData')
     .then((res) => {
-      setHolderData(res.data[0]);
-      setEditedAddress(holderData.address);
-      setEditedBalance(fetchbalance(holderData.address));
-    });
-  })
+    setPrice((res.data.usd));
+    })
+    },[]);
+
   return (
     <div>
       <Header />
@@ -81,7 +92,7 @@ function EditWhale() {
                 Address
               </h5>
               <h4 className='font-space font-bold text-[12px] sm:text-[32px] text-dimWhite mt-2 border-b border-[#41434F] pb-1 overme '>
-                {holderData.address}
+                {holderData.address ? holderData.address.slice(0,20) : holderData.address}...
               </h4>
             </div>
             <div className='mt-1'>

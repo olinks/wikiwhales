@@ -3,7 +3,7 @@ import Home from "./Pages/Home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import EditWhale from "./Pages/EditWhale"
-import Datatables from "./components/MyDatatable"
+// import Datatables from "./components/MyDatatable"
 
 function App() {
   return (
