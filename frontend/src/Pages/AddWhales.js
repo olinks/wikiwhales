@@ -23,17 +23,9 @@ function AddWhales() {
     e.preventDefault();
     alert("Submitting....");
     axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
-    // axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
     .then((res) =>{
-      console.log(res);
-      console.log("data =>{");
-      console.log(res.data);
-      console.log("insertId =>{");
-      console.log(res.data.insertId);
-      // if(res.data.status == 200){
         alert("successfully added");
         redirectToPage(res.data.insertId);
-      // }
     });
   }
   function fetchbalance (e){

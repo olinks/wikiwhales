@@ -18,22 +18,29 @@ import convertToCurrency from "../components/convertToCurrency";
 
 function EditWhale() {
   const { id } = useParams()
-  // const details = Detailss.find((details) => details.id === id)
   const [holderData, setHolderData] = useState({});
+  const [editedUsername, setEditedUsername] = useState("");
+  const [editedPhone, setEditedPhone] = useState("");
+  const [editedBalance, setEditedBalance] = useState("");
+  const [editedAddress, setEditedAddress] = useState("");
+  const [price, setPrice] = useState('');
 
   useEffect(() => {
-    // axios.get(`http://localhost:3001/api/getHolderById/${id}`)
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderById/${id}`)
     .then((res) => {
       setHolderData(res.data[0]);
       setEditedAddress(holderData.address);
       fetchbalance(holderData.address);
     });
-  },[id, holderData.address])
+  })
 
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    setOpen(true);
+    setEditedUsername(holderData.username);
+    setEditedPhone(holderData.phone);
+  }
   const handleClose = () => setOpen(false)
   const style = {
     position: "absolute",
@@ -49,11 +56,6 @@ function EditWhale() {
   const handleClick = () => {
     navigate("/")
   }
-  const [editedUsername, setEditedUsername] = useState("");
-  const [editedPhone, setEditedPhone] = useState("");
-  const [editedBalance, setEditedBalance] = useState("");
-  const [editedAddress, setEditedAddress] = useState("");
-  const [price, setPrice] = useState('');
 
   function fetchbalance (e){
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${e}`)
@@ -63,10 +65,10 @@ function EditWhale() {
     console.log()
     });
   }
-  const submitEdit = () =>{
+  const submitEdit = (e) =>{
+    e.preventDefault();
     alert("Submitting....");
-    axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: editedUsername, address: editedAddress, balance: editedBalance, phone: editedPhone})
-    // axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
+    axios.post('https://wikiwhales-server.vercel.app/api/updateHolderInfo',{username: editedUsername, address: editedAddress, balance: editedBalance, phone: editedPhone})
     .then((res) =>{
       console.log(res.data);
     });
@@ -112,7 +114,10 @@ function EditWhale() {
               </h4>
             </div>
             <button
-              onClick={handleOpen}
+              onClick={() => {
+                handleOpen();
+              }
+              }
               className='font-inter text-[14px] sm:text-[20px] mt-2  font-bold text-white w-[77px] sm:w-[129px] sm:h-[49px] h-[43px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'
             >
               Edit
@@ -140,56 +145,58 @@ function EditWhale() {
                 variant='h6'
                 component='h2'
               >
-                <div className=' w-[100%]   h-[310px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-5 mt-5'>
-                  <div className=' '>
-                    <div>
-                      <h5 className='font-space text-[#838699] text-[14px]  font-normal '>
-                        Address
-                      </h5>
-                      <h4 className='font-space font-bold text-[16px] text-dimWhite mt-2 border-b border-[#41434F] pb-1  overmee'>
-                        {holderData.address}
-                      </h4>
-                    </div>
-                    <div className='mt-1 mb-2'>
-                      <h5 className='text-[#838699] text-[14px]  font-normal mb-2 '>
-                        Username
-                      </h5>
-                      <div className='flex w-[100%] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px] border-[#838699]'>
-                        <input
-                          type='text'
-                          className='font-space bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
-                          placeholder='Username...'
-                          value={holderData.username}
-                          onChange={(e) => {
-                            setEditedUsername(e.target.value);
-                          }}
-                        />
+                <form>
+                  <div className=' w-[100%]   h-[310px] border border-[#5253E9] rounded-[20px] flex flex-col px-4 lg:py-6 py-5 mt-5'>
+                    <div className=' '>
+                      <div>
+                        <h5 className='font-space text-[#838699] text-[14px]  font-normal '>
+                          Address
+                        </h5>
+                        <h4 className='font-space font-bold text-[16px] text-dimWhite mt-2 border-b border-[#41434F] pb-1  overmee'>
+                          {holderData.address}
+                        </h4>
                       </div>
-                    </div>
-                    <div className='mt-1 mb-3'>
-                      <h5 className='font-space text-[#838699] text-[14px]  font-normal mb-2 '>
-                        Phone Number
-                      </h5>
-                      <div className='flex w-[100%]  justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px]  border-[#838699]'>
-                        <input
-                          type='text'
-                          className='font-space bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
-                          placeholder='Enter Phone Number'
-                          value={holderData.phone}
-                          onChange={(e) => {
-                            setEditedPhone(e.target.value);
-                          }}
-                        />
+                      <div className='mt-1 mb-2'>
+                        <h5 className='text-[#838699] text-[14px]  font-normal mb-2 '>
+                          Username
+                        </h5>
+                        <div className='flex w-[100%] justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px] border-[#838699]'>
+                          <input
+                            type='text'
+                            className='font-space bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
+                            placeholder={editedUsername}
+                            required
+                            onChange={(e) => {
+                              setEditedUsername(e.target.value);
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
+                      <div className='mt-1 mb-3'>
+                        <h5 className='font-space text-[#838699] text-[14px]  font-normal mb-2 '>
+                          Phone Number
+                        </h5>
+                        <div className='flex w-[100%]  justify-start pl-2 rounded-[8px] items-center h-[36px] border-[1px]  border-[#838699]'>
+                          <input
+                            type='text'
+                            className='font-space bg-transparent pl-1 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D] text-[16px]'
+                            placeholder={holderData.phone}
+                            required
+                            onChange={(e) => {
+                              setEditedPhone(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
 
-                    <button
-                    onClick={submitEdit}
-                    className='font-inter text-[14px] mt-5 font-bold text-white w-[77px] h-[33px]  sm:w-[107px] sm:h-[44px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
-                      Save
-                    </button>
+                      <button
+                      onClick={submitEdit}
+                      className='font-inter text-[14px] mt-5 font-bold text-white w-[77px] h-[33px]  sm:w-[107px] sm:h-[44px]  flex justify-center items-center bg-[#5253E9] rounded-[10px]'>
+                        Save
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </form>
               </Typography>
             </Box>
           </Fade>
