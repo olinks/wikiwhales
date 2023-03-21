@@ -15,7 +15,7 @@ function MyDatatable (){
         .then((res) => {
         setHoldersList(res.data);
         })
-    },[])
+    },[holderslist])
 
     async function fetchbalance (e) {
         const addy = e;
