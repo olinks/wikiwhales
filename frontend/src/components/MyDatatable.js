@@ -33,7 +33,7 @@ function MyDatatable (){
     }
     async function deleteHolder (e) {
         const addy = e;
-        axios.get(`https://wikiwhales-server.vercel.app/api/deleteHolder/`,{address: addy})
+        axios.post(`https://wikiwhales-server.vercel.app/api/deleteHolder/`,{address: addy})
         .then((result) => {
             alert("deleted");
         });      
@@ -71,9 +71,9 @@ function MyDatatable (){
             name: "Address",
             selector: row => row.address,
             sortable: true,
-            maxWidth: "250px",
+            maxWidth: "255px",
             cell: row => (
-                <h5 className='w-[287px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-[#21D4AF] '>
+                <h5 className='w-[300px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-[#21D4AF] '>
                     <Link to={`details/${row.id}`}>{row.address.slice(0,19)}...</Link>
                 </h5>
             ),
@@ -84,7 +84,7 @@ function MyDatatable (){
             sortable: true,
             maxWidth: "250px",
             cell: row => (
-                <h5 className='w-[200px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-white '>
+                <h5 className='w-[230px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-white '>
                 {/* {(row.balance / 10**18).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
                 {convertToCurrency((row.balance / 10**18).toFixed(2))}
                 </h5>
