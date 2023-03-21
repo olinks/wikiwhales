@@ -75,6 +75,16 @@ app.post('/api/updateHolderInfo', (req, res) => {
     });
 });
 
+app.post('/api/deleteHolder', (req, res) => {
+    const address = req.body.address;
+    const status = '0';
+
+    const sql ="UPDATE holders SET status=? WHERE address=?";
+    db.query(sql,[status, address], (err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+    });
+});
+
 app.get('/api/updateHolderBalance/:balance&:address', (req, res) => {
     const address = req.params.address;
     const newbal = req.params.balance;
@@ -90,7 +100,6 @@ app.post('/api/refreshHolderBalance/', (req, res) => {
     const sql = 'UPDATE holders SET balance=? WHERE address=?';
     db.query(sql,[newbal,address], (err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
-        console.log(result);
     });
 });
 
@@ -134,8 +143,18 @@ app.get('/api/getHolderBalance/:address',(req,res) => {
 })
 
 app.get('/api/getAllHolders',(req, res) => {
-    const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 10";
+    const sql = "SELECT * FROM holders WHERE balance > 0 ORDER BY balance DESC LIMIT 1000";
     // const sql = "SELECT * FROM holders  WHERE balance > 0";
+    db.query(sql,(err, result) => {
+        err ? res.send(err) : result ? res.send(result) : res.send('No result');
+        data = result
+    })
+})
+
+app.get('/api/searchHolders/:address',(req, res) => {
+    const search = req.params.address;
+    // const sql = "SELECT * FROM holders WHERE username LIKE ?% OR address LIKE ?% ORDER BY balance DESC LIMIT 10";
+    const sql = `SELECT * FROM holders WHERE username LIKE '${search}%' OR address LIKE '%${search}%'`;
     db.query(sql,(err, result) => {
         err ? res.send(err) : result ? res.send(result) : res.send('No result');
         data = result
