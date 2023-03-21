@@ -2,6 +2,8 @@ import React,{useState, useEffect} from "react";
 import DataTable, { createTheme } from 'react-data-table-component';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import { AiOutlineCloseCircle, AiOutlineReload } from "react-icons/ai"
+import { IconContext } from "react-icons/lib"
 import convertToCurrency from "./convertToCurrency";
 
 function MyDatatable (){
@@ -12,9 +14,30 @@ function MyDatatable (){
         axios.get('https://wikiwhales-server.vercel.app/api/getWhales')
         .then((res) => {
         setHoldersList(res.data);
-        console.log(res.data);
         })
     },[])
+
+    async function fetchbalance (e) {
+        const addy = e;
+        axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
+        .then((result) => {
+            console.log("result", result.data)
+
+            console.log(e);
+            const newBal = result.data;
+            axios.post(`https://wikiwhales-server.vercel.app/api/refreshHolderBalance`, {address: addy, balance: newBal})
+            .then((result) => {
+                
+            })
+        });      
+    }
+    async function deleteHolder (e) {
+        const addy = e;
+        axios.get(`https://wikiwhales-server.vercel.app/api/deleteHolder/`,{address: addy})
+        .then((result) => {
+            alert("deleted");
+        });      
+    }
 
     const [price, setPrice] = useState('');
     useEffect(() => {
@@ -51,7 +74,7 @@ function MyDatatable (){
             maxWidth: "250px",
             cell: row => (
                 <h5 className='w-[287px] sm:text-[16px] lg:text-[16px] text-[16px] font-inter font-normal text-[#21D4AF] '>
-                    <Link to={`details/${row.id}`}>{row.address.slice(0,20)}...</Link>
+                    <Link to={`details/${row.id}`}>{row.address.slice(0,19)}...</Link>
                 </h5>
             ),
         },
@@ -89,6 +112,45 @@ function MyDatatable (){
                     ${convertToCurrency(((row.balance * price) /10**18).toFixed(2))}
                 </h5>
             ),
+        },{
+            name:"Actions",
+            selector: row => row.value,
+            cell: row => (
+                <div>
+                    {/* Refresh button */}
+                    <button 
+                    style={{color
+                    : "#5253E9"}}
+                    className="m-2"
+                    onClick={() => {
+                        fetchbalance(row.address)
+                    }}
+                    >
+                        <AiOutlineReload 
+                        style={
+                            {
+                                color: "#5253E9"
+                            }
+                        }
+                        />
+                    </button>
+                    {/* Delete Button */}
+                    <button
+                    className="m-2"
+                    onClick={() => {
+                        deleteHolder(row.address)
+                    }}
+                    >
+                        <AiOutlineCloseCircle
+                        style={
+                            {
+                                color: "#ed6969"
+                            }
+                        }
+                        />
+                    </button>
+                </div>
+            ),
         }
     ];
     const paginationOptions = {
@@ -121,6 +183,7 @@ function MyDatatable (){
 
     return(
         <div>
+          <IconContext.Provider value={{ color: "white", size: "20px" }}>
             <div className="sm:px-5 lg:mx-20">
                 <DataTable className="lg:mx-5"
                 title="Whales"
@@ -135,6 +198,7 @@ function MyDatatable (){
                     >
                 </DataTable>
             </div>
+            </IconContext.Provider >
         </div>
     );
 }

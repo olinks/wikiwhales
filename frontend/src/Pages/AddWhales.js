@@ -31,11 +31,11 @@ function AddWhales() {
   function fetchbalance (e){
     const addy = e.target.value;
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
-    // axios.get(`http://localhost:3001/api/getHolderBalance/0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff`)
     .then((result) => {
     setBalance(result.data);
     });      
 }
+
   return (
     <div className="sm:justify-start flex justify-center items-center flex-col">
       <IconContext.Provider value={{ color: "white", size: "20px" }}>

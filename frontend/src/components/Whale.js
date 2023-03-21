@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState} from "react"
 import axios from 'axios'
 import { IconContext } from "react-icons/lib"
 import { RiSearchLine } from "react-icons/ri"
@@ -13,12 +13,36 @@ import Fade from "@mui/material/Fade"
 import Typography from "@mui/material/Typography"
 import { AiOutlineUser, AiOutlineCopy, AiOutlinePhone } from "react-icons/ai"
 import { BsCurrencyDollar } from "react-icons/bs"
+
+import convertToCurrency from "./convertToCurrency";
+import { Link } from "react-router-dom"
+
 function Whale() {
 
   const [username,setUsername] = useState("");
   const [balance,setBalance] = useState("0");
   const [address,setAddress] = useState("");
   const [phone,setPhone] = useState("");
+
+  const [searchResult, setSearchResult] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const searchWhale = (e) => {
+    const s = e.target.value;
+    console.log("search", s);
+    if (s !== ''){
+      try{
+
+        axios.get(`https://wikiwhales-server.vercel.app/api/searchHolders/${s}`)
+        .then((result) => {
+          setIsSearching(true)
+          setSearchResult(result.data);
+        })
+      }catch(e){
+        setSearchResult([]);
+      }
+    }
+  }
 
 
    const redirectToPage = (i) =>{
@@ -30,7 +54,6 @@ function Whale() {
     e.preventDefault();
     alert("Submitting....");
     axios.post('https://wikiwhales-server.vercel.app/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
-    // axios.post('http://localhost:3001/api/insertHolderInfo',{username: username, address: address, balance: balance, phone: phone})
     .then((res) =>{
       console.log(res);
       console.log("data =>{");
@@ -47,7 +70,6 @@ function Whale() {
   function fetchbalance (e){
     const addy = e.target.value;
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${addy}`)
-    // axios.get(`http://localhost:3001/api/getHolderBalance/0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff`)
     .then((result) => {
     setBalance(result.data);
     });
@@ -67,6 +89,13 @@ function Whale() {
     boxShadow: 24,
     p: 4,
   }
+  const searchStyleShow = {
+    display: "block",
+  }
+  const searchStyleHide = {
+    display: "none",
+  }
+  let searchStyle = searchStyleShow;
   return (
     <div className='md:px-32 px-5 mt-10 '>
       <IconContext.Provider value={{ size: "20px", color: "#3C3E4D" }}>
@@ -78,14 +107,34 @@ function Whale() {
           <p className='font-light text-[14px] text-[#838699] w-[100%] sm:w-[350px] text-center sm:text-start sm:mb-0 mb-3 sm:px-0 px-4'>
             A list of all Worthy Wikicat Holders{" "}
           </p>
-          <div className='flex w-[100%] sm:w-[387px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
-            <RiSearchLine className='' />
-            <input
-              type='text'
-              className='bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
-              placeholder='Enter Coin Name / Address'
-            />
+          <div className="flex flex-col">
+            <div className='flex w-[100%] sm:w-[387px] justify-start pl-2 rounded-[8px] items-center h-[39px] border-[1px] mt-3 sm:mt-0 border-[#838699]'>
+              <RiSearchLine className='' />
+              <input
+                type='text'
+                className='bg-transparent pl-3 outline-none text-[#3C3E4D] w-[100%] placeholder:text-[#3C3E4D]'
+                placeholder='Enter Coin Name / Address'
+                onChange={searchWhale}
+                onBlur={() => {
+                  searchStyle = searchStyleHide;
+                }}
+              />
+            </div>
+              <div id="resultBar" style={searchStyle} className="relative bg-[transparent] w-[100%] my-2 rounded-[8px] max-h-32 p-2 overflow-auto divide-y z-40">
+                {searchResult.map((res, i) => {
+                  return (
+                    <div key={i} className="px-2 py-1 hover:bg-cyan-600 hover:rounded-[8px]">
+                      <Link to={`/details/${res.id}`} ><h6 className="font-inter  text-white">{res.username}</h6></Link>
+                      <Link to={`/details/${res.id}`} >
+                        <p className="font-normal text-[#21D4AF]">{res.address.slice(0,18)}...</p>
+                        <p className="font-normal text-[#808080]">Bal: {convertToCurrency((res.balance / 10**18).toFixed(2))}</p>
+                      </Link>
+                    </div>
+                  )
+                })}
+              </div>
           </div>
+
           
         </div>
        </div>

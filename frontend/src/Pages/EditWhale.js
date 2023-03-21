@@ -59,7 +59,6 @@ function EditWhale() {
 
   function fetchbalance (e){
     axios.get(`https://wikiwhales-server.vercel.app/api/getHolderBalance/${e}`)
-    // axios.get(`http://localhost:3001/api/getHolderBalance/0xb552cf92e761c8c71f8de52ed10b0df6dcfa24ff`)
     .then((result) => {
     setEditedBalance(result.data);
     console.log()
@@ -202,20 +201,21 @@ function EditWhale() {
           </Fade>
         </Modal>
 
-        <div className=' w-[100%] sm:w-[698px] h-[108px] border border-[#3C3E4D] rounded-[10px] p-4  mt-4 '>
+        <div className=' w-[100%] sm:w-[698px] sm:h-[140px] h-[120px] border border-[#3C3E4D] rounded-[10px] p-4 sm:p-2 mt-4 '>
           <h5 className='text-[12px] font-inter font-normal text-[#838699]'>
             Balance
           </h5>
           <h4 className='font-space text-[#F6F6F6] text-[20px] font-bold'>
             {convertToCurrency((holderData.balance / 10**18).toFixed(2))} WKC
           </h4>
-          <h4 className='font-space text-[#838699] text-[16px] font-normal mt-1'>
+          <h4 className='font-space text-[#838699] text-[16px] font-normal lg:mt-1'>
             ${convertToCurrency(((holderData.balance * price) /10**18).toFixed(2))}
           </h4>
         </div>
       </div>
 
       <div className='mt-10 pl-5 md:px-32  overflow-x-scroll sm:overflow-hidden'>
+        <h2 className="font-space text-[#F6F6F6] text-[20px] font-bold py-5">Transaction History</h2>
         <table style={{}}>
           <tr className='bg-[#101116] '>
             <td
@@ -227,7 +227,7 @@ function EditWhale() {
               }}
               className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white'
             >
-              Rank
+              Tx Hash
             </td>
             <td
               style={{ width: "307px" }}
@@ -248,16 +248,16 @@ From
               className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white lg:pl-[40px]'
             >
               {" "}
-              Percentage
+              To
             </td>
             <td
               style={{ width: "129px" }}
               className='text-[10px] sm:text-[12px]  lg:text-[14px]  font-inter font-normal text-white lg:pl-[40px]  md:pl-[40px] md:pr-[60px]'
             >
-              Value
+              Amount
             </td>
           </tr>
-          {Details.map((detail) => {
+          {/* Details.map((detail) => {
             return (
               <tr key={detail.id} style={{ borderBottom: "1px solid #3C3E4D" }}>
                 <td
@@ -270,6 +270,7 @@ From
                 >
                   {detail.id}
                 </td>
+                
                 <td
                   style={{
                     width: "287px",
@@ -300,7 +301,7 @@ From
                   className='sm:text-[12px] pr-7 md:pr-[-28px] lg:text-[14px] lg:pr-[40px] text-[10px] lg:pl-[40px] font-inter font-normal text-white'
                 >
                   {" "}
-                  {detail.percentage}
+                  {detail.address}
                 </td>
                 <td
                   style={{
@@ -315,7 +316,7 @@ From
                 </td>
               </tr>
             )
-          })}
+          })*/}
         </table>
       </div>
     </div>

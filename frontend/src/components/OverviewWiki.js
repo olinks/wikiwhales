@@ -10,7 +10,6 @@ function Overview() {
     .then((res) => {
     setPrice((res.data.usd));
     setChange((res.data.usd_24h_change));
-    console.log("Price Data",res.data)
     })
     },[])
 
@@ -25,7 +24,6 @@ function Overview() {
 
     axios.get('https://wikiwhales-server.vercel.app/api/getTokenCirculatingSupply')
     .then((res) => {
-      console.log("Csupply", res);
       setTokenCSupply(res.data);
     });
 
